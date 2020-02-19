@@ -37,4 +37,4 @@ for i in range(76, 100):
 '''
 for i in range(0,5):
     img.save(f'endtest-{i}.PNG')
-''' #endtest score success(wartermark x
+''' #endtest score success(wartermark x)
