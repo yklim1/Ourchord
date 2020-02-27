@@ -1,17 +1,3 @@
-#import numpy as np
-#import cv2
-#from wand.image import Image
-#IMREAD_COLOR(1): color로 읽기
-#IMREAD_GRAY_SCALE(0): GRAYSCALE로 읽기
-#IMREAD_UNCHAGED(-1): ALPHA CHANNEL까지 포함하여 읽기
-
-# only black img save success
-
-#blackimg = Image(filename="qutest-0.png", resolution=300)
-#with Image(filename='qutest-0.png') as img:
-
-    #img.save(filename='suc.png')
-#
 #Transparency_score.py
 from PIL import Image
 
