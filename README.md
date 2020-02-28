@@ -1,5 +1,4 @@
-# <영상처리를 이용한 악보 코드 변환 프로그램> 
-## OURCHORD
+# <영상처리를 이용한 악보 코드 변환 프로그램> - OURCHORD
 
 ### 1. 개요
 * 음악 전공자가 아닌 사람들은 조표(샾, 플랫)가 많은 악보를 연주함에 어려움을 느끼는 경우 많음
@@ -19,6 +18,7 @@
 * 문지수 : Database 환경 설계
 * 공동 : 딥러닝 모델 구현
 ### 5. Detail
+* Library : Tensorflow, OpenCV
 * TOOL : Pychram CE, Visual Studio Code, MySQLWorkbench
 * Language : Python, Java
 * ETC : PHP, MYSQL
