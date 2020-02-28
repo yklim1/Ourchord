@@ -30,7 +30,7 @@ Music Score Chord Conversion Program using OpenCV, DeepLearning.(ver. 2020 Capst
 * 공동 : 딥러닝 모델 구현
 # 5. Detail
 * Library : Tensorflow, OpenCV
-* Tool : Pychram CE, Visual Studio Code, MySQLWorkbench
+* Tool : Pychram CE, Visual Studio Code, Android Studio, MySQLWorkbench
 * Language : Python, Java
 * ETC : PHP, MYSQL
 * Server/Database : Linux, MYSQL
