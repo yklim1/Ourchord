@@ -1,6 +1,6 @@
 # Project Title
 2020 Capstone Design
-## 영상처리와 딥러닝을 이용한 악보 코드 변환 프로그램 - OURCHORD
+"영상처리와 딥러닝을 이용한 악보 코드 변환 프로그램 - OURCHORD"
 Music Score Chord Conversion Program using OpenCV, DeepLearning.
 
 # 1. 개요(Introduction)
