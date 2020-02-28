@@ -4,7 +4,7 @@ Music Score Chord Conversion Program using OpenCV, DeepLearning.(ver. 2020 Capst
 
 # 1. 개요(Introduction)
 * 음악 전공자가 아닌 사람들은 조표(샾, 플랫)가 많은 악보를 연주함에 어려움을 느끼는 경우 많음 <br>
-  People who are not music majosr often find it difficult to play music with lots of key signature.
+  People who are not music majors often find it difficult to play music with lots of key signature.
 * 세션 연주자들은 각자 악기에 맞추어 하나의 코드(chord)로 맞추어 연주해야 하는 경우 많음 <br>
   Session performers often have to play one chord to each instrument.
 * 대부분의 악보가 PDF 파일로 제공되어 악보 수정이 어려움 <br>
