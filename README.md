@@ -1,1 +1,2 @@
-# OurChord
+#영상처리를 이용한 악보 코드 변환 프로그램 
+OurChord
