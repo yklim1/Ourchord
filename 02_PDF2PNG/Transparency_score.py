@@ -26,7 +26,7 @@ for i in range(1,31):
     datas=img.getdata()
 
     newData = []
-    Cutoff=170 #10이하는 비슷한걸로 보임 10이랑 100은 차이남
+    Cutoff=170 #Cutoff 50~200 이내로
 
     for item in datas:
         if item[0] >= Cutoff and item[1] >=Cutoff and item[2] >=Cutoff:
