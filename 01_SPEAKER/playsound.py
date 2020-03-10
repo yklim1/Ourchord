@@ -1,6 +1,6 @@
 import os
 
-tuning_sound=input("what did you want?(A ~ G): ")
+tuning_sound=input("what did you want?(A ~ G): ") 
 
 print("Start "+tuning_sound+" play")
 
