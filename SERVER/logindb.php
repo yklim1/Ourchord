@@ -2,7 +2,7 @@
     <html lang="ko">
         <head>
         <meta charset="utf-8">
-        <title>Login Test</title>
+        <title>LoginDB Test</title>
         <style>
             body {
                 font-family: Consolas, monospace;
