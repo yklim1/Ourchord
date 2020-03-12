@@ -22,4 +22,3 @@ while 1: #user input only A to G
 
     if ex==7: #if input data is not A to G
         print("please input A to G !!")
-
