@@ -1,0 +1,2 @@
+0 NOTE2_down
+1 NOTE2_up
