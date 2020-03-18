@@ -1,3 +1,4 @@
+#png 파일에서 오선 추출하기 
 import cv2
 import numpy as np
 import collections
@@ -13,12 +14,12 @@ def binary_search_np(A, B):
 
 
 
-img = cv2.imread('.vscode\score4.png',cv2.COLOR_BGR2GRAY)
+img = cv2.imread('C:/testFile/linetest/138289/138289-4.png',cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(img, (3,3), 0)
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-edges = cv2.Canny(gray, 200, 300, apertureSize = 3)
-minLineLength = 200
-maxLineGap = 50
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #배경이 투명에서 다시 흰색으로 변환
+edges = cv2.Canny(gray, 200, 250, apertureSize = 3) #악보 반쪽만 오선 추출되는거 해결
+minLineLength = 50
+maxLineGap = 100
 lines = cv2.HoughLinesP(edges, 1, np.pi/180, 100, minLineLength, maxLineGap)
 ytest=[]
 ycounter=[]
@@ -49,22 +50,22 @@ for item in ycounter:
     if i != num:
         #print(ycounter[i])
         #print(item)
-        #추출된 선간의 간격이 2이하일 때 하나 제거
-        if ycounter[i]-item<3:
+        
+        if ycounter[i]-item<21: 
             y.remove(item)
     else:
         break
     i=i+1
 i=1
 for item in y:
-    cv2.line(img, (0, item-1), (2000, item-1), (255, 0, 255), 2)
+    cv2.line(img, (0, item-1), (4000, item-1), (255, 0, 255), 2)
     print(f"{i}번째 : ", end=' ')
     print(item-1)
     i=i+1
 gap= y[3]-y[2]
 print(gap/2)
-x=[40,100,180,230]
-notey=[128,140,141,159.5]
+#x=[40,100,180,230]
+#notey=[128,140,141,159.5]
 
 
 
@@ -84,6 +85,6 @@ notey=[128,140,141,159.5]
     
 cv2.imshow('SCORE_EDGE', edges)
 cv2.imshow('RESULT', img)
-cv2.imwrite('.vscode\musicresult.png',img)
+cv2.imwrite('C:/testFile/linetest/138289/138289-4check.png',img)
 cv2.waitKey()
 cv2.destroyAllWindows()
