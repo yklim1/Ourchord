@@ -131,16 +131,107 @@ for i in range(num):
     #cv.imwrite(f'.vscode\stest{i}.png',testcopy)
     m=m+1
 
-one=[]
-two=[]
-three=[]
-four=[]
-five=[]
-six=[]
-seven=[]
-eight=[]
+
 '''
-checknum=0
+notelist=[[],[],[],[],[],[],[],[],[],[],[],[]]
+checknum=[0,0,0,0,0,0,0,0,0,0,0,0]
+
+for i in range(num):
+    if(y[0]-30<xylist[i][1]<y[4]+30):
+        notelist[0].append([])
+        notelist[0][checknum[0]].append(xylist[i][0])
+        notelist[0][checknum[0]].append(xylist[i][1])
+        checknum[0]=checknum[0]+1
+        
+    
+
+    if(y[5]-30<xylist[i][1]<y[9]+30):
+        notelist[1].append([])
+        notelist[1][checknum[1]].append(xylist[i][0])
+        notelist[1][checknum[1]].append(xylist[i][1])
+        checknum[1]=checknum[1]+1
+
+    if(y[10]-30<xylist[i][1]<y[14]+30):
+        notelist[2].append([])
+        notelist[2][checknum[2]].append(xylist[i][0])
+        notelist[2][checknum[2]].append(xylist[i][1])
+        checknum[2]=checknum[2]+1 
+
+    if(y[15]-30<xylist[i][1]<y[19]+30):
+        notelist[3].append([])
+        notelist[3][checknum[3]].append(xylist[i][0])
+        notelist[3][checknum[3]].append(xylist[i][1])
+        checknum[3]=checknum[3]+1    
+
+    if(y[20]-30<xylist[i][1]<y[24]+30):
+        notelist[4].append([])
+        notelist[4][checknum[4]].append(xylist[i][0])
+        notelist[4][checknum[4]].append(xylist[i][1])
+        checknum[4]=checknum[4]+1
+
+    if(y[25]-30<xylist[i][1]<y[29]+30):
+        notelist[5].append([])
+        notelist[5][checknum[5]].append(xylist[i][0])
+        notelist[5][checknum[5]].append(xylist[i][1])
+        checknum[5]=checknum[5]+1       
+
+    if(y[30]-30<xylist[i][1]<y[34]+30):
+        notelist[6].append([])
+        notelist[6][checknum[6]].append(xylist[i][0])
+        notelist[6][checknum[6]].append(xylist[i][1])
+        checknum[6]=checknum[6]+1    
+
+    if(y[35]-30<xylist[i][1]<y[39]+30):
+        notelist[7].append([])
+        notelist[7][checknum[7]].append(xylist[i][0])
+        notelist[7][checknum[7]].append(xylist[i][1])
+        checknum[7]=checknum[7]+1     
+
+    if(y[40]-30<xylist[i][1]<y[44]+30):
+        notelist[8].append([])
+        notelist[8][checknum[8]].append(xylist[i][0])
+        notelist[8][checknum[8]].append(xylist[i][1])
+        checknum[8]=checknum[8]+1      
+
+    if(y[45]-30<xylist[i][1]<y[49]+30):
+        notelist[9].append([])
+        notelist[9][checknum[9]].append(xylist[i][0])
+        notelist[9][checknum[9]].append(xylist[i][1])
+        checknum[9]=checknum[9]+1       
+
+    if(y[50]-30<xylist[i][1]<y[54]+30):
+        notelist[10].append([])
+        notelist[10][checknum[10]].append(xylist[i][0])
+        notelist[10][checknum[10]].append(xylist[i][1])
+        checknum[10]=checknum[10]+1     
+
+    if(y[55]-30<xylist[i][1]<y[59]+30):
+        notelist[11].append([])
+        notelist[11][checknum[11]].append(xylist[i][0])
+        notelist[11][checknum[11]].append(xylist[i][1])
+        checknum[11]=checknum[11]+1      
+
+
+    print(f"{m}번째 : ", xylist[i][0],xylist[i][1])
+    m=m+1
+
+a=1
+for i in range(0,12):
+    notelist[i].sort(key=itemgetter(0))
+    #print(notelist[i])
+    #print("------------------------------------------")
+    print(f"-----------------------------오선지 {i+1}번째 좌표들------------------------------")
+    for y in range(0,len(notelist[i])):
+        print(f"{a}번째 x,y 좌표 : ", notelist[i][y][0],notelist[i][y][1])
+        a=a+1
+
+
+
+
+
+
+'''
+checknum=[0,0,0,0,0,0,0,0,0,0,0,0]
 
 onelist=[]
 twolist=[]
@@ -158,92 +249,112 @@ twelvelist=[]
 for i in range(num):
     if(y[0]-30<xylist[i][1]<y[4]+30):
         onelist.append([])
-        onelist[checknum].append(xylist[i][0])
-        onelist[checknum].append(xylist[i][1])
-        checknum=checknum+1
-    checknum=0
+        onelist[checknum[0]].append(xylist[i][0])
+        onelist[checknum[0]].append(xylist[i][1])
+        checknum[0]=checknum[0]+1
+    
 
     if(y[5]-30<xylist[i][1]<y[9]+30):
         twolist.append([])
-        twolist[checknum].append(xylist[i][0])
-        twolist[checknum].append(xylist[i][1])
-        checknum=checknum+1
-    checknum=0
+        twolist[checknum[1]].append(xylist[i][0])
+        twolist[checknum[1]].append(xylist[i][1])
+        checknum[1]=checknum[1]+1
 
     if(y[10]-30<xylist[i][1]<y[14]+30):
         threelist.append([])
-        threelist[checknum].append(xylist[i][0])
-        threelist[checknum].append(xylist[i][1])
-        checknum=checknum+1 
-    checknum=0
+        threelist[checknum[2]].append(xylist[i][0])
+        threelist[checknum[2]].append(xylist[i][1])
+        checknum[2]=checknum[2]+1 
 
     if(y[15]-30<xylist[i][1]<y[19]+30):
         fourlist.append([])
-        fourlist[checknum].append(xylist[i][0])
-        fourlist[checknum].append(xylist[i][1])
-        checknum=checknum+1    
-    checknum=0
+        fourlist[checknum[3]].append(xylist[i][0])
+        fourlist[checknum[3]].append(xylist[i][1])
+        checknum[3]=checknum[3]+1    
 
     if(y[20]-30<xylist[i][1]<y[24]+30):
         fivelist.append([])
-        fivelist[checknum].append(xylist[i][0])
-        fivelist[checknum].append(xylist[i][1])
-        checknum=checknum+1
-    checknum=0
+        fivelist[checknum[4]].append(xylist[i][0])
+        fivelist[checknum[4]].append(xylist[i][1])
+        checknum[4]=checknum[4]+1
 
     if(y[25]-30<xylist[i][1]<y[29]+30):
         sixlist.append([])
-        sixlist[checknum].append(xylist[i][0])
-        sixlist[checknum].append(xylist[i][1])
-        checknum=checknum+1       
-    checknum=0
+        sixlist[checknum[5]].append(xylist[i][0])
+        sixlist[checknum[5]].append(xylist[i][1])
+        checknum[5]=checknum[5]+1       
 
     if(y[30]-30<xylist[i][1]<y[34]+30):
         sevenlist.append([])
-        sevenlist[checknum].append(xylist[i][0])
-        sevenlist[checknum].append(xylist[i][1])
-        checknum=checknum+1    
-    checknum=0
+        sevenlist[checknum[6]].append(xylist[i][0])
+        sevenlist[checknum[6]].append(xylist[i][1])
+        checknum[6]=checknum[6]+1    
 
     if(y[35]-30<xylist[i][1]<y[39]+30):
         eightlist.append([])
-        eightlist[checknum].append(xylist[i][0])
-        eightlist[checknum].append(xylist[i][1])
-        checknum=checknum+1     
-    checknum=0
+        eightlist[checknum[7]].append(xylist[i][0])
+        eightlist[checknum[7]].append(xylist[i][1])
+        checknum[7]=checknum[7]+1     
 
     if(y[40]-30<xylist[i][1]<y[44]+30):
         ninelist.append([])
-        ninelist[checknum].append(xylist[i][0])
-        ninelist[checknum].append(xylist[i][1])
-        checknum=checknum+1      
-    checknum=0
+        ninelist[checknum[8]].append(xylist[i][0])
+        ninelist[checknum[8]].append(xylist[i][1])
+        checknum[8]=checknum[8]+1      
 
     if(y[45]-30<xylist[i][1]<y[49]+30):
         tenlist.append([])
-        tenlist[checknum].append(xylist[i][0])
-        tenlist[checknum].append(xylist[i][1])
-        checknum=checknum+1       
-    checknum=0
+        tenlist[checknum[9]].append(xylist[i][0])
+        tenlist[checknum[9]].append(xylist[i][1])
+        checknum[9]=checknum[9]+1       
 
     if(y[50]-30<xylist[i][1]<y[54]+30):
         elevenlist.append([])
-        elevenlist[checknum].append(xylist[i][0])
-        elevenlist[checknum].append(xylist[i][1])
-        checknum=checknum+1     
-    checknum=0
+        elevenlist[checknum[10]].append(xylist[i][0])
+        elevenlist[checknum[10]].append(xylist[i][1])
+        checknum[10]=checknum[10]+1     
 
     if(y[55]-30<xylist[i][1]<y[59]+30):
         twelvelist.append([])
-        twelvelist[checknum].append(xylist[i][0])
-        twelvelist[checknum].append(xylist[i][1])
-        checknum=checknum+1      
-    checknum=0
+        twelvelist[checknum[11]].append(xylist[i][0])
+        twelvelist[checknum[11]].append(xylist[i][1])
+        checknum[11]=checknum[11]+1      
 
 
     print(f"{m}번째 : ", xylist[i][0],xylist[i][1])
     m=m+1
 
+
+onelist.sort(key=itemgetter(0))
+twolist.sort(key=itemgetter(0))
+threelist.sort(key=itemgetter(0))
+fourlist.sort(key=itemgetter(0))
+fivelist.sort(key=itemgetter(0))
+sixlist.sort(key=itemgetter(0))
+sevenlist.sort(key=itemgetter(0))
+eightlist.sort(key=itemgetter(0))
+ninelist.sort(key=itemgetter(0))
+tenlist.sort(key=itemgetter(0))
+elevenlist.sort(key=itemgetter(0))
+twelvelist.sort(key=itemgetter(0))
+
+print(onelist)
+print(twolist)
+print(threelist)
+print(fourlist)
+print(fivelist)
+print(sixlist)
+print(sevenlist)
+print(eightlist)
+print(ninelist)
+print(tenlist)
+print(elevenlist)
+print(twelvelist)
+'''
+#cv2.rectangle(img_rgb2, (255,142), (300, 200), (0,0,255), 2)
+#cv2.rectangle(img_rgb2, (361,136), (400, 200), (0,0,255), 2)
+
+'''
 print(len(onelist))
 print(len(twolist))
 print(len(threelist))
@@ -256,19 +367,19 @@ print(len(ninelist))
 print(len(tenlist))
 print(len(elevenlist))
 print(len(twelvelist))
-
 '''
-cv2.imwrite('.vscode\sres.png',img_rgb1)
-cv2.imwrite('.vscode\sres2.png',img_rgb2)
-cv2.imwrite('.vscode\sres3.png',dst)
-cv2.imshow('result2', img_rgb2)
-cv2.imshow('result1', img_rgb1)
-cv2.imshow('SCORE_EDGE', edges)
-cv2.imshow('RESULT', img)
-cv2.imwrite('.vscode\musicresult.png',img)
 
-cv.waitKey(0)
-'''
+#cv2.imwrite('.vscode\sres.png',img_rgb1)
+#cv2.imwrite('.vscode\sres2.png',img_rgb2)
+#cv2.imwrite('.vscode\sres3.png',dst)
+#cv2.imshow('result2', img_rgb2)
+#cv2.imshow('result1', img_rgb1)
+#cv2.imshow('SCORE_EDGE', edges)
+#cv2.imshow('RESULT', img)
+#cv2.imwrite('.vscode\musicresult.png',img)
+
+#cv2.waitKey(0)
+
 
 
 
