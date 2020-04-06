@@ -6,7 +6,7 @@ standard_detect_gap = 13
 img = cv2.imread('.vscode//ad.png',cv2.COLOR_BGR2GRAY)  
 #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-#이진화 170이상일시 흰색 아니면 흑색
+#이진화 230이상일시 흰색 아니면 흑색
 ret, dst = cv2.threshold(img, 230,255,cv2.THRESH_BINARY)#ret에는 임계값이 저장
 height, width, channel = img.shape
 
