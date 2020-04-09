@@ -2,7 +2,7 @@
     <html lang="ko">
         <head>
         <meta charset="utf-8">
-        <title>Modify(Add)DB Test</title>
+        <title>LoginDB Test</title>
         <style>
             body {
                 font-family: Consolas, monospace;
@@ -27,14 +27,15 @@
         </thead>
         <tbody>
             <?php
-            #create table & insert new values
-            echo "query() to create table test code<br><br>";
-
+            #php-db connection test code
+            #localhost/study/database_con_test.php
+            #header("Content-Type: text/html; charset=UTF-8");
             $host="localhost";
             $user="userID";
             $pw="pw";
             $dbName="dbName";
-            $mysqli=new mysqli($host,$user,$pw,$dbName); 
+                
+            $mysqli=mysqli_connect($localhostName,$userId,$pw,$dbName);
 
             #MYSQL connection suc
             if($mysqli){
@@ -43,39 +44,18 @@
                 echo "MYSQL 접속 실패<br><br>" .mysqli_connect_error();
             }
 
-            $sql="INSERT into test values";
-            $sql=$sql."('me','meme&!')";
-            $mysqli->query($sql);
-
-            $sql="INSERT into test values";
-            $sql=$sql."('ma','mama012@#')";
-            $mysqli->query($sql);
-
-            $sql="INSERT into test values";
-            $sql=$sql."('mo','hilmomofiek*34')";
-            $mysqli->query($sql);
-
-            $sql='SELECT * FROM test';
-            $res=$mysqli->query($sql);
-
-            #record count
-            echo 'record  count number: '.$res->num_rows;
-            echo '<br>';
-
-            #field count
-            echo 'field count number: '.$res->field_count;
-            echo '<br>';
-
             #show test login table
             $query="select *from test LIMIT 100;"; #"select * from table_name
             $res=mysqli_query($mysqli,$query);
-            
+            #$row=mysqli_fetch_array($res); - line53 while($res){ :error(첫번째 행만 무한반복 출력)
+
             #show data
             while($row=mysqli_fetch_array($res)){
                 echo '<tr><td>' . $row['id'] . '</td><td>'. $row['password'] . '</td></tr>';
             }
 
             mysqli_close($mysqli);
+            #print_r($_SERVER);
             ?>
         </tbody>
     </table>

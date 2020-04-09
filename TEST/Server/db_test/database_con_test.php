@@ -43,23 +43,74 @@
                 echo "MYSQL 접속 실패<br><br>" .mysqli_connect_error();
             }
 
-            $sql="INSERT into test values";
+            #add--------------------------------------------
+            #logindb.php 
+            $select_query="SELECT id from test" or die(mysql_error());
+            $result_set=mysqli_query($mysqli, $select_query);
+            $row=mysqli_fetch_array($result_set);
+            
+            if($row === "me"){
+                print "<br>me는 기존에 존재하는 아이디입니다.";
+
+            }else{
+                print "<br>me는 생성가능한 아이디입니다.";
+
+            $sql="INSERT into test values"; 
             $sql=$sql."('me','meme&!')";
             $mysqli->query($sql);
-
+            } 
+            #end add--------------------------------------------end 
+        
             $sql="INSERT into test values";
             $sql=$sql."('ma','mama012@#')";
             $mysqli->query($sql);
 
+            #add--------------------------------------------
+            if($res->num_rows>=1){
+                print "<br>ma"; 
+            ?>
+            <strong>는 기존에 존재하는 아이디입니다.</strong></div>
+
+        <?php
+            }else{
+                print "<br>ma"; 
+            ?>
+
+            <strong>는 생성가능한 아이디입니다.</strong></div>
+
+        <?php 
+            } #end add--------------------------------------------end 
+            ?>
+
+        <?php
             $sql="INSERT into test values";
             $sql=$sql."('mo','hilmomofiek*34')";
             $mysqli->query($sql);
 
+            #add--------------------------------------------
+            if($res->num_rows>=1){
+                print "<br>mo"; 
+            ?>
+            <strong>는 기존에 존재하는 아이디입니다.</strong></div>
+
+        <?php
+            }else{
+                print "<br>mo"; 
+            ?>
+
+            <strong>는 생성가능한 아이디입니다.</strong></div>
+
+        <?php 
+            } #end add--------------------------------------------end 
+            ?>
+
+        <?php
             $sql='SELECT * FROM test';
             $res=$mysqli->query($sql);
 
+        
             #record count
-            echo 'record  count number: '.$res->num_rows;
+            echo '<br><br>record  count number: '.$res->num_rows;
             echo '<br>';
 
             #field count
