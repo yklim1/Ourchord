@@ -5,7 +5,6 @@ from os.path import isfile, join
 import numpy as np
 import cv2
 
-# Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
 # Load the model
@@ -16,7 +15,7 @@ model = tensorflow.keras.models.load_model('./converted_keras/keras_model.h5')
 # determined by the first position in the shape tuple, in this case 1.
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-path_dir = '/Users/zjisuoo/Documents/zjisuoo_git/OurChord/00_NOTE_DATA/NOTE_B/TestData/Test'
+path_dir = '/Users/zjisuoo/Documents/zjisuoo_git/OurChord/00_NOTE_DATA/TEST'
 onlyfiles = [f for f in listdir(path_dir) if isfile(join(path_dir, f))]
 
 image = np.empty(len(onlyfiles), dtype = object)
@@ -27,17 +26,14 @@ for item in range(0, len(onlyfiles)) :
     print(onlyfiles[item])
     #resize the image to a 224x224 with the same strategy as in TM2:
     #resizing the image to be at least 224x224 and then cropping from the center
-    # size = (224, 224)
-    image = ImageOps.fit(image, (224, 224), Image.ANTIALIAS)
+    image_resize = image.resize((244, 244))
+    # image = ImageOps.fit(image, (224, 224), Image.ANTIALIAS)
 
-    #turn the image into a numpy array
+    #turn the image int a numpy array
     image_array = np.array(onlyfiles[item])
 
-    # display the resized image
-    # image.show()
-
     # Normalize the image
-    normalized_image_array = (image_array.astype(dtype = object) / 127.0) - 1
+    normalized_image_array = (image_array.astype(dtype = float32) / 127.0) - 1
 
     # Load the image into the array
     data = normalized_image_array
