@@ -1,2 +1,0 @@
-0 NOTE8_down
-1 NOTE8_up

@@ -1,2 +1,0 @@
-0 NOTE16_down
-1 NOTE16_up
