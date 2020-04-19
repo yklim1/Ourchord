@@ -1,5 +1,5 @@
 # Project Title
-<h3>영상처리와 딥러닝을 이용한 악보 코드 변환 프로그램 - OurChord</h3> 
+> <h3>영상처리와 딥러닝을 이용한 악보 코드 변환 프로그램 - OurChord</h3> 
 Music Score Chord Conversion Program using OpenCV, DeepLearning(ver. 2020 Capstone Design)
 
 # Introduction
