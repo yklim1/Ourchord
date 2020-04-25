@@ -11,20 +11,20 @@ def note_search(imgpath):
     img_rgb = cv.imread(imgpath, 0) 
     img_gray = cv.imread(imgpath, cv.COLOR_BGR2GRAY)
     ret, dst = cv.threshold(img_gray,100,255,cv.THRESH_BINARY)
-    x = cv.cvtColor(dst, cv.COLOR_BGR2GRAY)
+    # x = cv.cvtColor(dst, cv.COLOR_BGR2GRAY)
     img_rgb2 = cv.imread(imgpath, cv.COLOR_BGR2GRAY)
 
-    lists = ['.vscode//qu1.png','.vscode//qu2.png','.vscode//qu3.png','.vscode//qu4.png','.vscode//qu5.png','.vscode//qu6.png','.vscode//ha1.png','.vscode//ha2.png','.vscode//ha3.png','.vscode//ha4.png']#나중 DB 경로로 수정
+    lists = ['/Users/zjisuoo/Documents/zjisuoo_git/OurChord/01_OPENCV/note/tem_full_1.png','/Users/zjisuoo/Documents/zjisuoo_git/OurChord/01_OPENCV/note/tem_full_2.png']#나중 DB 경로로 수정
     xylist=[]
     xylist.append([])
     i=0
     for image in lists:
         template = cv.imread(image,0)
         ret1, dst1 = cv.threshold(template,100,255,cv.THRESH_BINARY)
-        #template_gray = cv.cvtColor(dst1,cv.COLOR_BGR2RGB)
+        template_gray = cv.cvtColor(dst1,cv.COLOR_BGR2RGB)
         w, h = template.shape[::-1]
 
-        res = cv.matchTemplate(x,template,cv.TM_CCOEFF_NORMED) #0.6<x< 0.65
+        res = cv.matchTemplate(dst1, template,cv.TM_CCOEFF_NORMED) #0.6<x< 0.65
         #res = cv.matchTemplate(x,dst1,cv.TM_CCOEFF_NORMED) #0.6<x< 0.65 
         threshold = 0.65
         loc = np.where( res >= threshold)
@@ -93,7 +93,7 @@ def note_search(imgpath):
 
     cv.imshow('result1', img_gray)
     cv.imshow('result2', img_rgb2)
-    cv.imwrite('.vscode//resizebb.png', img_rgb2)
+    cv.imwrite('/Users/zjisuoo/Documents/zjisuoo_git/OurChord/01_OPENCV/sheet/resizebb.png', img_rgb2)
     print("갯수", len(updownlist))
     cv.waitKey(0)
 def detect_staff(imagepath):#오선 좌표구하는 함수, 입력 값 : 이미지 경로 , 출력 값 : 오선 좌표 리스트
@@ -128,7 +128,7 @@ def detect_staff(imagepath):#오선 좌표구하는 함수, 입력 값 : 이미�
     
     return staff
 
-imgpath = '.vscode//resizeaa.png'
+imgpath = '/Users/zjisuoo/Documents/zjisuoo_git/OurChord/01_OPENCV/sheet/resizeaa.png'
 
 '''
 #오선과 오선 사이 중간값 구하는 것, 활용할지는 보류
