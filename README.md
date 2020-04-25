@@ -24,13 +24,13 @@
 * 악기 튜닝 시 원하는 코드(chord) 음 제공 <br>
   Provide the desired sound of the chord when tuning the instrument.
 # Role
-> 임영규 : Application 환경 설계
-> 김민지 : Server 환경 설계
-> 문지수 : Database 환경 설계
-> 공동 : 딥러닝 모델 구현
+> 임영규 : Application 환경 설계  
+> 김민지 : Server 환경 설계  
+> 문지수 : Database 환경 설계  
+> 공동 : 딥러닝 모델 구현  
 # Detail
-> Library : Tensorflow, OpenCV
-> Tool : Pychram CE, Visual Studio Code, Android Studio, MySQLWorkbench
-> Language : Python, Java
-> ETC : PHP, MYSQL
-> Server/Database : Linux, MYSQL
+> Library : Tensorflow, OpenCV   
+> Tool : Pychram CE, Visual Studio Code, Android Studio, MySQLWorkbench   
+> Language : Python, Java   
+> ETC : PHP, MYSQL   
+> Server/Database : Linux, MYSQL   
