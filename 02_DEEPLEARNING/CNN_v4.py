@@ -10,14 +10,14 @@ import cv2
 np.set_printoptions(suppress=True)
 
 # Load the model
-model = tensorflow.keras.models.load_model('./note_model/note_staff_model.h5')
+model = tensorflow.keras.models.load_model('./note_model/staff_224.h5')
 
 # Create the array of the right shape to feed into the keras model
 # The 'length' or number of images you can put into the array is
 # determined by the first position in the shape tuple, in this case 1.
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-path_dir = '/Users/zjisuoo/Documents/zjisuoo_git/OurChord/02_DEEPLEARNING/vscode_3/'
+path_dir = '/Users/zjisuoo/Documents/학교/OurChord/Code/02_DEEPLEARNING/test_data/'
 onlyfiles = [f for f in listdir(path_dir) if isfile(join(path_dir, f))]
 onlist = []
 for i in range(len(onlyfiles)):
