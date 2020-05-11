@@ -478,7 +478,7 @@ def note_scale(staff_list,notelist,start_list):
         
         elif(staff_list[5*i+4]+gap*3.5<notelist[y][1]<staff_list[5*i+4]+gap*4.5):
             notelist[y].insert(4,"G3")
-
+            
         else:
             notelist[y].insert(4,"미확인")
     
