@@ -27,7 +27,7 @@ def note_search(imgpath):
     #print("stafflist : ",stafflist)
     reszie_rate=averge_rate_staff(stafflist)
     #print("resize_rate : ",reszie_rate)
-    resize_img_path =resize_image(imgpath,reszie_rate)
+    resize_img_path =resize_image(imgpath,reszie_rate) #imgpath: png로 변환된 pdf악보 이미지 사이즈 변경
     resize_stafflist = detect_staff(resize_img_path)
     #print("resize_stafflist",resize_stafflist)
 
@@ -35,11 +35,31 @@ def note_search(imgpath):
     img_rgb2 = cv2.imread(resize_img_path, 0)
     img_gray = cv2.imread(resize_img_path, cv2.COLOR_BGR2GRAY)
     
+    # ---------------------------------------------------- 경로 수정
+    #notelists: tem_empty, tem_full: 기존-6, 4 --> 5, 5
+    #/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_1~5.png
+    #/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_1~5.png
+    notelists = ['/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_1.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_2.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_3.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_4.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_5.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_1.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_2.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_3.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_4.png',
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_5.png']#empty, full png경로
+    eightrest=['./home/ec2-user/Ourchord/NOTE/rest/wholerest/eight.png'] #8분쉼표
+    quarterrest=['/home/ec2-user/Ourchord/NOTE/rest/wholerest/quarter.png'] #4분쉼표
+    halfrest=['/home/ec2-user/Ourchord/NOTE/rest/wholerest/half.png'] #2분쉼표
+    wholerest=['/home/ec2-user/Ourchord/NOTE/rest/wholerest/whole.png'] #온쉼표
+    # ---------------------------------------------------- 경로 수정
+    '''
     notelists = ['.vscode//qu1.png','.vscode//qu2.png','.vscode//qu3.png','.vscode//qu4.png','.vscode//qu5.png','.vscode//qu6.png','.vscode//ha1.png','.vscode//ha2.png','.vscode//ha3.png','.vscode//ha4.png']#나중 DB 경로로 수정
     eightrest=['.vscode//eightrest.png']
     quarterrest=['.vscode//quarterrest.png']
     halfrest=['.vscode//halfrest.png']
-    wholerest=['.vscode//wholerest.png']
+    wholerest=['.vscode//wholerest.png']'''
 
 
     notevalue = '음표'
@@ -214,7 +234,8 @@ def note_image(xylist,stafflist,image_path):
                     print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
                     cv2.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-3), (xylist[i][0] + 31, xylist[i][1] + 60), (0,0,255), 1)
                     testcopy = img_rgb[xylist[i][1]-3:xylist[i][1]+60, xylist[i][0]-2:xylist[i][0]+31]
-                    cv2.imwrite(f'.vscode\ee\down\{i}.png',testcopy)
+                    #딥러닝 시킨 파일과 현재 악보 음표의 박자 구분 확인을 위한 꼬리부분 png저장
+                    cv2.imwrite(f'/home/ec2-user/Ourchord/PDF/12/down/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
                     break
             else:
                 if(xylist[i][1]<stafflist[5*int(j/2)+4]+20):
@@ -222,7 +243,7 @@ def note_image(xylist,stafflist,image_path):
                     print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
                     cv2.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-48), (xylist[i][0] + 31, xylist[i][1] + 15), (0,0,255), 1)
                     testcopy = img_rgb[xylist[i][1]-48:xylist[i][1]+15, xylist[i][0]-2:xylist[i][0]+31]
-                    cv2.imwrite(f'.vscode\ee//up\{i}.png',testcopy)
+                    cv2.imwrite(f'/home/ec2-user/Ourchord/PDF/12/up/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
                     break
         #cv.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-48), (xylist[i][0] + 31, xylist[i][1] + 15), (0,0,255), 1)
         #print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
@@ -231,7 +252,8 @@ def note_image(xylist,stafflist,image_path):
         m=m+1
 
     print("갯수", len(updownlist))
-    cv2.imwrite('.vscode//testnotesearch.png',img_rgb2)
+    #cv2.imwrite('.vscode//testnotesearch.png',img_rgb2)    # ---------------------------------------------------- 경로 수정
+    cv2.imwrite('/home/ec2-user/Ourchord/PDF/12/testnotesearch.png',img_rgb2) 
     #cv2.waitKey(0)
 
 # 오선 비율 확인
@@ -297,7 +319,7 @@ def detect_staff(imagepath):
 
 def resize_image(imgpaht, rate):
     img_source = cv2.imread(imgpaht,0)
-    resize_img_path = '.vscode//resizeaa.png'
+    resize_img_path = '/home/ec2-user/Ourchord/PDF/12/resize/renew.png' # ---------------------------------------------------- 경로 수정
     #이미지 변환
     img_result = cv2.resize(img_source, None, fx=rate, fy=rate, interpolation = cv2.INTER_CUBIC)
     #cv2.imshow("x2", img_result)
@@ -409,7 +431,6 @@ def sort_staff_note(staff_average, notelist):
                 line.sort(key=itemgetter(0))
                 test.append(line)
                 line=[]
-
     line.sort(key=itemgetter(0))
     test.append(line)
     print(test)
@@ -603,7 +624,8 @@ def midicreate(notelist):
     midi = Midi(number_tracks=0, tempo=90)
     midi.seq_notes(seq, track=0)
     #midi.seq_notes(notes2, track=0)
-    midi.write(".vscode//demotest.mid")
+    #midi.write(".vscode//demotest.mid")
+    midi.write("/home/ec2-user/Ourchord/MIDI/12.mid") # ---------------------------------------------------- 경로 수정
         
 
     
@@ -645,7 +667,8 @@ def pdftopng(pdfpath):
     for i in range(len(doc)):
         page = doc.loadPage(i)
         pix = page.getPixmap()
-        output = f".vscode//outfile{i}.png"
+        output = f'/home/ec2-user/Ourchord/PDF/12/outfile{i}.png'# ---------------------------------------------------- 경로 수정
+        #output = f".vscode//outfile{i}.png" # ---------------------------------------------------- 경로 수정
         pix.writePNG(output)
         
     return len(doc)
@@ -653,14 +676,15 @@ def pdftopng(pdfpath):
 
 #main
 
-pdfpath = '.vscode//12.pdf'   
-#imgpath = '.vscode//12-1.png'
+pdfpath = '/home/ec2-user/Ourchord/PDF/12.pdf'  # ---------------------------------------------------- 경로 수정
+#imgpath = '.vscode//12.png'
 #note_search(imgpath)
 
 num = pdftopng(pdfpath)
 
 for i in range(num):
-    imgpath = f'.vscode//outfile{i}.png'
+    imgpath = f'/home/ec2-user/Ourchord/PDF/12/outfile{i}.png' # ---------------------------------------------------- 경로 수정
+    #imgpath = f'.vscode//outfile{i}.png'
     note_search(imgpath)
 
 #note_search(imgpath)
