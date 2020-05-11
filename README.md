@@ -23,5 +23,5 @@
 > Library : Tensorflow, OpenCV   
 > Tool : Pychram CE, Visual Studio Code, Android Studio, MySQLWorkbench   
 > Language : Python, Java   
-> ETC : PHP, MYSQL   
+> ETC :  MYSQL   
 > Server/Database : Linux, MYSQL   
