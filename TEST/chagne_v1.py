@@ -25,6 +25,7 @@ def note_search(imgpath):
 
     stafflist = detect_staff(imgpath)
     #print("stafflist : ",stafflist)
+    #stafflist: detect_staff로 찾은 값
     reszie_rate=averge_rate_staff(stafflist)
     #print("resize_rate : ",reszie_rate)
     resize_img_path =resize_image(imgpath,reszie_rate) #imgpath: png로 변환된 pdf악보 이미지 사이즈 변경
@@ -36,22 +37,20 @@ def note_search(imgpath):
     img_gray = cv2.imread(resize_img_path, cv2.COLOR_BGR2GRAY)
     
     # ---------------------------------------------------- 경로 수정
-    #notelists: tem_empty, tem_full: 기존-6, 4 --> 5, 5
+    #notelists: tem_empty, tem_full: 기존-6, 4 --> 5, 6
     #/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_1~5.png
-    #/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_1~5.png
+    #/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_1~6.png
     notelists = ['/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_1.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_2.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_3.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_4.png',
-                 '/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_5.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_1.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_2.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_3.png',
-                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_4.png',
-                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_5.png']#empty, full png경로
-    eightrest=['./home/ec2-user/Ourchord/NOTE/rest/wholerest/eight.png'] #8분쉼표
-    quarterrest=['/home/ec2-user/Ourchord/NOTE/rest/wholerest/quarter.png'] #4분쉼표
-    halfrest=['/home/ec2-user/Ourchord/NOTE/rest/wholerest/half.png'] #2분쉼표
+                 '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_4.png']#empty, full png경로
+    eightrest=['./home/ec2-user/Ourchord/NOTE/rest/eightrest/eight.png'] #8분쉼표
+    quarterrest=['/home/ec2-user/Ourchord/NOTE/rest/quarterrest/quarter.png'] #4분쉼표
+    halfrest=['/home/ec2-user/Ourchord/NOTE/rest/halfrest/half.png'] #2분쉼표
     wholerest=['/home/ec2-user/Ourchord/NOTE/rest/wholerest/whole.png'] #온쉼표
     # ---------------------------------------------------- 경로 수정
     '''
@@ -317,8 +316,8 @@ def detect_staff(imagepath):
     '''
     return staff
 
-def resize_image(imgpaht, rate):
-    img_source = cv2.imread(imgpath,0)
+def resize_image(imgpath, rate):
+    img_source = cv2.imread(imgpaht,0)
     resize_img_path = '/home/ec2-user/Ourchord/PDF/12/resize/renew.png' # ---------------------------------------------------- 경로 수정
     #이미지 변환
     img_result = cv2.resize(img_source, None, fx=rate, fy=rate, interpolation = cv2.INTER_CUBIC)
@@ -683,6 +682,7 @@ pdfpath = '/home/ec2-user/Ourchord/PDF/12.pdf'  # ------------------------------
 num = pdftopng(pdfpath)
 
 for i in range(num):
+    #imgpath: 악보 png하나의 경로
     imgpath = f'/home/ec2-user/Ourchord/PDF/12/outfile{i}.png' # ---------------------------------------------------- 경로 수정
     #imgpath = f'.vscode//outfile{i}.png'
     note_search(imgpath)
