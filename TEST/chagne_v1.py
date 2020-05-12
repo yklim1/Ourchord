@@ -317,7 +317,7 @@ def detect_staff(imagepath):
     return staff
 
 def resize_image(imgpath, rate):
-    img_source = cv2.imread(imgpaht,0)
+    img_source = cv2.imread(imgpath,0)
     resize_img_path = '/home/ec2-user/Ourchord/PDF/12/resize/renew.png' # ---------------------------------------------------- 경로 수정
     #이미지 변환
     img_result = cv2.resize(img_source, None, fx=rate, fy=rate, interpolation = cv2.INTER_CUBIC)
