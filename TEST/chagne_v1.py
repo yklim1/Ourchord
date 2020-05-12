@@ -48,7 +48,7 @@ def note_search(imgpath):
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_2.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_3.png',
                  '/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_4.png']#empty, full png경로
-    eightrest=['./home/ec2-user/Ourchord/NOTE/rest/eightrest/eight.png'] #8분쉼표
+    eightrest=['/home/ec2-user/Ourchord/NOTE/rest/eightrest/eight.png'] #8분쉼표
     quarterrest=['/home/ec2-user/Ourchord/NOTE/rest/quarterrest/quarter.png'] #4분쉼표
     halfrest=['/home/ec2-user/Ourchord/NOTE/rest/halfrest/half.png'] #2분쉼표
     wholerest=['/home/ec2-user/Ourchord/NOTE/rest/wholerest/whole.png'] #온쉼표
@@ -620,7 +620,7 @@ def midicreate(notelist):
     print(NoteList)
     seq = NoteSeq(NoteList)
         
-    midi = Midi(number_tracks=0, tempo=90)
+    midi = Midi(number_tracks=2, tempo=90)
     midi.seq_notes(seq, track=0)
     #midi.seq_notes(notes2, track=0)
     #midi.write(".vscode//demotest.mid")
