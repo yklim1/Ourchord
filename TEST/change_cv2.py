@@ -22,8 +22,8 @@ def note_search(imgpath):
     #img_rgb = cv2.imread('.vscode\score4.png', 0) 
     
     #테스트 조 설정
-    base='G#'
-    change='C'
+    base='C'
+    change='D'
     transegap = transpose(base,change)
     print(transegap)
 
@@ -95,24 +95,16 @@ def note_search(imgpath):
     
     #print("startlist : ",startlist)
     #print("test",startlist)
-
-    
-    
-    note_image(xylist,resize_stafflist,resize_img_path)
-
-    tempolist = tempo_classfication(xylist)
     #박자 딥러닝 하기전 테스트
-    #for i in range(len(xylist)):
-    #    xylist[i].append(1/4)
+    for i in range(len(xylist)):
+        xylist[i].append(1/4)
     #print(xylist)
     scale_note_list = note_scale(resize_stafflist,xylist,startlist)
-
     note_list = scale_note_list + restlist
 
     note_list.sort(key=itemgetter(1))
     sort_list=sort_staff_note(staff_average_line,note_list)
     
-    print(sort_list)
     #list -> [x,y,박자,음계,오선번째]
 
     change_list=changescale(sort_list,transegap)
@@ -132,6 +124,7 @@ def note_search(imgpath):
     #stafflist = [323, 335, 349, 362, 375, 588, 600, 614, 626, 640, 856, 868, 882, 895, 907]
     #04/26 테스트중 주석처리함
     #note_image(xylist,resize_stafflist,resize_img_path)
+    
 
 
 def template_note_list(imgpath, temlist, divide, stafflist):
@@ -149,7 +142,7 @@ def template_note_list(imgpath, temlist, divide, stafflist):
     elif(divide == 1/2):
         threshold = 0.9
     elif(divide == 1/4):
-        threshold = 0.68
+        threshold = 0.75
     elif(divide == 1/8):
         threshold = 0.8
         
@@ -223,13 +216,12 @@ def note_image(xylist,stafflist,image_path):
 
     img_rgb = cv2.imread(image_path, 0) 
     img_rgb2 = cv2.imread(image_path, 0) 
-    #print("xylist", xylist)
     #테스트 오선 없는 것
     #img_white = cv2.imread('.vscode/whiteimg.png',0)
-    num = len(xylist)
+    num = len(xylist)-1
     #y좌표를 오름차순으로 정렬
     xylist.sort(key=itemgetter(1))
-    #m=1
+    m=1
     print(stafflist)
     staffnum = int(len(stafflist)/5)
     updownlist = []
@@ -240,26 +232,25 @@ def note_image(xylist,stafflist,image_path):
             if(j%2 == 0):
                 if(xylist[i][1]<stafflist[5*int(j/2)+2]):
                     updownlist.append("down")
-                    #print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
+                    print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
                     cv2.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-3), (xylist[i][0] + 31, xylist[i][1] + 60), (0,0,255), 1)
                     testcopy = img_rgb[xylist[i][1]-3:xylist[i][1]+60, xylist[i][0]-2:xylist[i][0]+31]
                     #딥러닝 시킨 파일과 현재 악보 음표의 박자 구분 확인을 위한 꼬리부분 png저장
-                    
-                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/note/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
+                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/down/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
                     break
             else:
                 if(xylist[i][1]<stafflist[5*int(j/2)+4]+20):
                     updownlist.append("up")
-                    #print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
+                    print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
                     cv2.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-48), (xylist[i][0] + 31, xylist[i][1] + 15), (0,0,255), 1)
                     testcopy = img_rgb[xylist[i][1]-48:xylist[i][1]+15, xylist[i][0]-2:xylist[i][0]+31]
-                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/note/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
+                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/up/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
                     break
         #cv.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-48), (xylist[i][0] + 31, xylist[i][1] + 15), (0,0,255), 1)
         #print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
         #testcopy = img_rgb[xylist[i][1]:xylist[i][1]+18, xylist[i][0]:xylist[i][0]+13]
         #cv2.imwrite(f'.vscode\stest{i}.png',testcopy) #추후 DB저장으로 수정
-        #m=m+1
+        m=m+1
 
     print("갯수", len(updownlist))
     #cv2.imwrite('.vscode//testnotesearch.png',img_rgb2)    # ---------------------------------------------------- 경로 수정
@@ -449,6 +440,7 @@ def sort_staff_note(staff_average, notelist):
     
     #return test
 
+
 def note_scale(staff_list,notelist,start_list):
     i=0
     gap=6.5
@@ -545,8 +537,9 @@ def note_scale(staff_list,notelist,start_list):
     
     return notelist
 
-# 박자 인식 05/13
-def tempo_classfication(xylist) :
+
+# 05/12 박자 인식 추가
+def tempo_classfication(notelist) :
 
     np.set_printoptions(suppress=True)
 
@@ -556,7 +549,7 @@ def tempo_classfication(xylist) :
     # 타겟 사이즈 224 X 224 
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-    notelist_path = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/note/'
+    notelist_path = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/'
     onlyfiles = [f for f in listdir(notelist_path) if isfile(join(notelist_path, f))]
     onlist = []
     for i in range(len(onlyfiles)):
@@ -571,9 +564,9 @@ def tempo_classfication(xylist) :
     print(onlyfiles)
 
     image = np.empty(len(onlyfiles), dtype = object)
-    tempolist = []
+    notelist = []
     for item in range(0, len(onlyfiles)) :
-        image[item] = Image.open(join(notelist_path+onlyfiles[item])).convert('RGB')
+        image[item] = Image.open(join(path_dir+onlyfiles[item])).convert('RGB')
         
         image[item] = image[item].resize((224, 224))
         image[item] = ImageOps.fit(image[item], (224, 224), Image.ANTIALIAS, centering = (0.5, 0.5))
@@ -587,30 +580,28 @@ def tempo_classfication(xylist) :
         prediction = model.predict(data)
 
         if(prediction[0][0] > 0.5):
-            xylist[item].append(1/2)
-            #print(onlyfiles[item]," 사진 : 2분음표")
+            notelist[item].insert(5,"2")
+            print(onlyfiles[item]," 사진 : 2분음표")
         elif(prediction[0][1] > 0.5):
-            xylist[item].append(1/2)
-            #print(onlyfiles[item]," 사진 : 2분음표")
+            notelist[item].insert(5,"2")
+            print(onlyfiles[item]," 사진 : 2분음표")
         elif(prediction[0][2] > 0.5):
-            xylist[item].append(1/4)
-            #print(onlyfiles[item]," 사진 : 4분음표")
+            notelist[item].insert(5,"4")
+            print(onlyfiles[item]," 사진 : 4분음표")
         elif(prediction[0][3] > 0.5):
-            xylist[item].append(1/4)
-            #print(onlyfiles[item]," 사진 : 4분음표")
+            notelist[item].insert(5,"4")
+            print(onlyfiles[item]," 사진 : 4분음표")
         elif(prediction[0][4] > 0.5):
-            xylist[item].append(1/8)
-            #print(onlyfiles[item]," 사진 : 8분음표")
+            notelist[item].insert(5,"8")
+            print(onlyfiles[item]," 사진 : 8분음표")
         elif(prediction[0][5] > 0.5):
-            xylist[item].append(1/8)
-            #print(onlyfiles[item]," 사진 : 8분음표")
+            notelist[item].insert(5,"8")
+            print(onlyfiles[item]," 사진 : 8분음표")
         else:
-            xylist[item].append(0)
+            notelist[item].insert(5,"NONE")
             print("음표아님")
 
-    #print(xylist)
-    #print(len(xylist))
-    return xylist
+    return notelist
 
 
 #가존 코드와 바꿀 코드의 차이
@@ -705,6 +696,9 @@ def midicreate(notelist):
     midi.write("/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/12.mid") # ---------------------------------------------------- 경로 수정
         
 
+    
+
+
     '''
     #note_sort_list = [[[0 for col in range(2)] for row in range(50)] for depth in range(len(staff_average)+1)]
     a=[]
@@ -760,7 +754,5 @@ for i in range(num):
     imgpath = f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/outfile{i}.png' # ---------------------------------------------------- 경로 수정
     #imgpath = f'.vscode//outfile{i}.png'
     note_search(imgpath)
-    #tempo_classfication()
-    
 
 #note_search(imgpath)

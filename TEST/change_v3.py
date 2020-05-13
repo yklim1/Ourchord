@@ -1,6 +1,4 @@
-from __future__ import division
-from pyknon.genmidi import Midi
-from pyknon.music import NoteSeq, Note, Rest
+#곰돌이 오선 좌표 323, 335, 349, 362, 375, 588, 600, 614, 626, 640, 856, 868, 882, 895, 907
 
 import cv2
 import numpy as np
@@ -8,31 +6,25 @@ import copy
 from matplotlib import pyplot as plt
 from operator import itemgetter
 import pdb
-import fitz
 import tensorflow.keras
 from PIL import Image, ImageOps
 from os import listdir
 from os.path import isfile, join
 from operator import itemgetter
+import numpy as np
+import cv2
 
 standard_detect_gap = 13
 
 #음표 좌표 추출
 def note_search(imgpath):
     #img_rgb = cv2.imread('.vscode\score4.png', 0) 
-    
-    #테스트 조 설정
-    base='G#'
-    change='C'
-    transegap = transpose(base,change)
-    print(transegap)
-
 
     stafflist = detect_staff(imgpath)
     #print("stafflist : ",stafflist)
     reszie_rate=averge_rate_staff(stafflist)
     #print("resize_rate : ",reszie_rate)
-    resize_img_path =resize_image(imgpath,reszie_rate) #imgpath: png로 변환된 pdf악보 이미지 사이즈 변경
+    resize_img_path =resize_image(imgpath,reszie_rate)
     resize_stafflist = detect_staff(resize_img_path)
     #print("resize_stafflist",resize_stafflist)
 
@@ -40,46 +32,30 @@ def note_search(imgpath):
     img_rgb2 = cv2.imread(resize_img_path, 0)
     img_gray = cv2.imread(resize_img_path, cv2.COLOR_BGR2GRAY)
     
-    # ---------------------------------------------------- 경로 수정
-    #notelists: tem_empty, tem_full: 기존-6, 4 --> 5, 5
-    #/home/ec2-user/Ourchord/NOTE/tem/tem_empty/tem_empty_1~5.png
-    #/home/ec2-user/Ourchord/NOTE/tem/tem_full/tem_full_1~5.png
-    notelists = ['/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/full_1.png',
-                '/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/full_2.png',
-                '/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/full_3.png',
-                '/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/full_4.png',
-                '/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/empty_1.png',
-                '/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/empty_2.png'] #empty, full png경로
-    eightrest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/rest8.png'] #8분쉼표
-    quarterrest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/rest4.png'] #4분쉼표
-    halfrest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/rest2.png'] #2분쉼표
-    wholerest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/01_OPENCV/template_note/rest1.png'] #온쉼표
-    # ---------------------------------------------------- 경로 수정
-    '''
-    notelists = ['.vscode//qu1.png','.vscode//qu2.png','.vscode//qu3.png','.vscode//qu4.png','.vscode//qu5.png','.vscode//qu6.png','.vscode//ha1.png','.vscode//ha2.png','.vscode//ha3.png','.vscode//ha4.png']#나중 DB 경로로 수정
-    eightrest=['.vscode//eightrest.png']
-    quarterrest=['.vscode//quarterrest.png']
-    halfrest=['.vscode//halfrest.png']
-    wholerest=['.vscode//wholerest.png']'''
+    notelists = ['/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/full_1.png', '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/full_2.png', '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/empty_1.png', '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/empty_2.png']#나중 DB 경로로 수정
+    eightrest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/rest8.png']
+    quarterrest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/rest4.png']
+    halfrest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/rest2']
+    wholerest=['/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/rest16']
 
 
     notevalue = '음표'
-    eightvalue = 1/8
-    quartervalue = 1/4
-    halfvalue = 1/2
-    wholevalue = 1
+    eightvalue = 1/2
+    quartervalue = 1
+    halfvalue = 2
+    wholevalue = 4
     #8분 쉼표 0.8
     #4분 쉼표 0.75
     #2분,온쉼표 0.9 이상
 
-    xylist = template_note_list(resize_img_path,notelists,notevalue,resize_stafflist)
-    eightlist = template_note_list(resize_img_path,eightrest,eightvalue,resize_stafflist)
+    xylist = template_note_list(resize_img_path,notelists,notevalue)
+    eightlist = template_note_list(resize_img_path,eightrest,eightvalue)
     #print("8분 : ",eightlist)
-    quarterlist = template_note_list(resize_img_path,quarterrest,quartervalue,resize_stafflist)
+    quarterlist = template_note_list(resize_img_path,quarterrest,quartervalue)
     #print("4분 : ",quarterlist)
-    halflist = template_note_list(resize_img_path,halfrest,halfvalue,resize_stafflist)
+    halflist = template_note_list(resize_img_path,halfrest,halfvalue)
     #print("2분 : ",halflist)
-    wholelist = template_note_list(resize_img_path,wholerest,wholevalue,resize_stafflist)
+    wholelist = template_note_list(resize_img_path,wholerest,wholevalue)
     #print("온 : ",wholelist)
 
     restlist = eightlist+quarterlist+halflist
@@ -87,7 +63,7 @@ def note_search(imgpath):
     #print("xylist : ",xylist)
     #print(xylist)
     #print(len(xylist))
-    
+
     staff_average_line = line_average(resize_stafflist)
     #print("staff_average_line : ",staff_average_line)
     
@@ -95,46 +71,28 @@ def note_search(imgpath):
     
     #print("startlist : ",startlist)
     #print("test",startlist)
-
-    
-    
-    note_image(xylist,resize_stafflist,resize_img_path)
-
-    tempolist = tempo_classfication(xylist)
     #박자 딥러닝 하기전 테스트
-    #for i in range(len(xylist)):
-    #    xylist[i].append(1/4)
+    for i in range(len(xylist)):
+        xylist[i].append('')
     #print(xylist)
     scale_note_list = note_scale(resize_stafflist,xylist,startlist)
-
     note_list = scale_note_list + restlist
 
     note_list.sort(key=itemgetter(1))
     sort_list=sort_staff_note(staff_average_line,note_list)
     
-    print(sort_list)
-    #list -> [x,y,박자,음계,오선번째]
-
-    change_list=changescale(sort_list,transegap)
-
-    '''
-    for i in range(len(change_list)):
-        print(f"{i}번째 :", change_list[i][3])
-    '''
-    
-    #print(change_list)
-
-    #midi 생성
-    midicreate(change_list)
+    for i in range(len(sort_list)):
+        print(f"{i}번째 :", sort_list[i][3])
 
 
     #테스트 좌표
     #stafflist = [323, 335, 349, 362, 375, 588, 600, 614, 626, 640, 856, 868, 882, 895, 907]
     #04/26 테스트중 주석처리함
     #note_image(xylist,resize_stafflist,resize_img_path)
+    
 
 
-def template_note_list(imgpath, temlist, divide, stafflist):
+def template_note_list(imgpath, temlist,divide):
     #img_rgb = cv.imread('.vscode\score4.png', 0) 
     img_rgb = cv2.imread(imgpath, 0) 
     img_gray = cv2.imread(imgpath, cv2.COLOR_BGR2BGRA)
@@ -144,13 +102,13 @@ def template_note_list(imgpath, temlist, divide, stafflist):
 
     if(divide == '음표'):
         threshold = 0.68
+    elif(divide == 4):
+        threshold = 0.9
+    elif(divide == 2):
+        threshold = 0.9
     elif(divide == 1):
-        threshold = 0.9
+        threshold = 0.75
     elif(divide == 1/2):
-        threshold = 0.9
-    elif(divide == 1/4):
-        threshold = 0.68
-    elif(divide == 1/8):
         threshold = 0.8
         
 
@@ -179,7 +137,7 @@ def template_note_list(imgpath, temlist, divide, stafflist):
             xylist[i].append(pt[1])
             if(divide != '음표'):
                 xylist[i].append(divide)
-                xylist[i].append('Rest')
+                xylist[i].append('쉼표')
             xylist.append([])
             i=i+1
     #빈 리스트 삭제
@@ -197,12 +155,6 @@ def template_note_list(imgpath, temlist, divide, stafflist):
                 remlist.append(i)
     #if abs(xylist[len(xylist)-1][0]-xylist[len(xylist)][0])<5 and abs(xylist[len(xylist)-1][1]-xylist[len(xylist)][1])<5 :
         #remlist.append(i)
-    
-    #오선 위에 있는 값 제거
-    for i in range(len(xylist)):
-        if(xylist[i][1]<2*stafflist[0]-stafflist[4]):
-            remlist.append(i)
-    
 
     remlist=list(set(remlist))
     remlist.sort()
@@ -223,13 +175,12 @@ def note_image(xylist,stafflist,image_path):
 
     img_rgb = cv2.imread(image_path, 0) 
     img_rgb2 = cv2.imread(image_path, 0) 
-    #print("xylist", xylist)
     #테스트 오선 없는 것
     #img_white = cv2.imread('.vscode/whiteimg.png',0)
-    num = len(xylist)
+    num = len(xylist)-1
     #y좌표를 오름차순으로 정렬
     xylist.sort(key=itemgetter(1))
-    #m=1
+    m=1
     print(stafflist)
     staffnum = int(len(stafflist)/5)
     updownlist = []
@@ -240,30 +191,27 @@ def note_image(xylist,stafflist,image_path):
             if(j%2 == 0):
                 if(xylist[i][1]<stafflist[5*int(j/2)+2]):
                     updownlist.append("down")
-                    #print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
+                    print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
                     cv2.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-3), (xylist[i][0] + 31, xylist[i][1] + 60), (0,0,255), 1)
                     testcopy = img_rgb[xylist[i][1]-3:xylist[i][1]+60, xylist[i][0]-2:xylist[i][0]+31]
-                    #딥러닝 시킨 파일과 현재 악보 음표의 박자 구분 확인을 위한 꼬리부분 png저장
-                    
-                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/note/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
+                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/{i}.png',testcopy)
                     break
             else:
                 if(xylist[i][1]<stafflist[5*int(j/2)+4]+20):
                     updownlist.append("up")
-                    #print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
+                    print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
                     cv2.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-48), (xylist[i][0] + 31, xylist[i][1] + 15), (0,0,255), 1)
                     testcopy = img_rgb[xylist[i][1]-48:xylist[i][1]+15, xylist[i][0]-2:xylist[i][0]+31]
-                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/note/{i}.png',testcopy)    # ---------------------------------------------------- 경로 수정
+                    cv2.imwrite(f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/{i}.png',testcopy)
                     break
         #cv.rectangle(img_rgb2, (xylist[i][0]-2,xylist[i][1]-48), (xylist[i][0] + 31, xylist[i][1] + 15), (0,0,255), 1)
         #print(f"{m}번째 : ", xylist[i][0],xylist[i][1], updownlist[i])
         #testcopy = img_rgb[xylist[i][1]:xylist[i][1]+18, xylist[i][0]:xylist[i][0]+13]
         #cv2.imwrite(f'.vscode\stest{i}.png',testcopy) #추후 DB저장으로 수정
-        #m=m+1
+        m=m+1
 
     print("갯수", len(updownlist))
-    #cv2.imwrite('.vscode//testnotesearch.png',img_rgb2)    # ---------------------------------------------------- 경로 수정
-    cv2.imwrite('/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/testnotesearch.png',img_rgb2) 
+    cv2.imwrite('/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/testnotesearch.png',img_rgb2)
     #cv2.waitKey(0)
 
 # 오선 비율 확인
@@ -289,7 +237,7 @@ def detect_staff(imagepath):
     img = cv2.imread(imagepath,cv2.IMREAD_COLOR)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     #테스트용인 곰세마리는 임계값 230으로 해야 다 뽑힌다. 그래서 230으로 테스트
-    ret, dst = cv2.threshold(gray, 220,255,cv2.THRESH_BINARY)#ret에는 임계값이 저장
+    ret, dst = cv2.threshold(gray, 170,255,cv2.THRESH_BINARY)#ret에는 임계값이 저장
     height, width = gray.shape
 
     ylist=[0 for _ in range(height)]#이미지 높이 만큼 값 0을 가진 리스트 생성 => ylist[높이만큼 개수] = [0]
@@ -329,7 +277,7 @@ def detect_staff(imagepath):
 
 def resize_image(imgpaht, rate):
     img_source = cv2.imread(imgpaht,0)
-    resize_img_path = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/resize/renew.png' # ---------------------------------------------------- 경로 수정
+    resize_img_path = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/test.png'
     #이미지 변환
     img_result = cv2.resize(img_source, None, fx=rate, fy=rate, interpolation = cv2.INTER_CUBIC)
     #cv2.imshow("x2", img_result)
@@ -338,20 +286,15 @@ def resize_image(imgpaht, rate):
     
     return resize_img_path
 
-
-
 #오선과 오선 사이 중간값 구하는 것, 활용할지는 보류
 def line_average(stafflist):
     checkrange = []
-    #print(stafflist)
     #print(len(stafflist))
     staffnum = len(stafflist)/5
     for i in range(1,int(staffnum)):
         checkrange.append(int((stafflist[5*i]+stafflist[5*i-1])/2))
     
-    #gap=checkrange[1]-checkrange[0]+checkrange[len(checkrange)-1]
-    gap = stafflist[len(stafflist)-1]+(stafflist[4]-stafflist[0])*2
-    
+    gap=checkrange[1]-checkrange[0]+checkrange[len(checkrange)-1]
     checkrange.append(gap)
     
 
@@ -397,54 +340,6 @@ def sort_staff_note(staff_average, notelist):
     print(notelist)
     #print(notelist)
     return notelist
-    '''
-    m=0
-    num=0
-    start_list = []
-    for i in range(len(notelist)):
-        if(notelist[i][1]>staff_average[m]):
-            m=m+1
-            if(m==len(staff_average)):
-                if(num==0):
-                    start_list.append(i)
-                    m=len(staff_average)-1
-                    num+1
-                    break
-                else:
-                    m=len(staff_average)-1
-                    break
-            start_list.append(i)
-    '''
-    
-    '''
-    #05/07 3차원 배열 -> 2차원 배열로 변경
-    m=0
-    num=0
-    test = []
-    line=[]
-    #print(start_list)
-    for i in range(len(notelist)):
-        line.append(notelist[i])
-        #print(m)
-        if(i>=start_list[m]-1):
-            m=m+1
-            if(m==len(staff_average)):
-                if(num==0):
-                    line.sort(key=itemgetter(0))
-                    test.append(line)
-                    line=[]
-                    num=num+1
-                    m=len(staff_average)-1
-                else:
-                    m=len(staff_average)-1
-            else:
-                line.sort(key=itemgetter(0))
-                test.append(line)
-                line=[]
-    line.sort(key=itemgetter(0))
-    test.append(line)
-    print(test)
-    '''
 
     
     #return test
@@ -470,83 +365,83 @@ def note_scale(staff_list,notelist,start_list):
         #print(notelist[y])
         
         if(staff_list[5*i]-gap*4.5<notelist[y][1]<staff_list[5*i]-gap*3.5):
-            notelist[y].insert(4,23)#멜로디 시 B5
+            notelist[y].insert(4,"B5")
 
         elif(staff_list[5*i]-gap*3.5<notelist[y][1]<staff_list[5*i]-gap*2.5):
-            notelist[y].insert(4,21)#멜로디 라 A5
+            notelist[y].insert(4,"A5")
 
         elif(staff_list[5*i]-gap*2.5<notelist[y][1]<staff_list[5*i]-gap*1.5):
-            notelist[y].insert(4,19)#멜로디 솔 G5
+            notelist[y].insert(4,"G5")
 
         elif(staff_list[5*i]-gap*1.5<notelist[y][1]<staff_list[5*i]-gap/2):
-            notelist[y].insert(4,17)#멜로디 파 F5
+            notelist[y].insert(4,"F5")
 
         elif(staff_list[5*i]-gap/2<notelist[y][1]<staff_list[5*i]+gap/2):
             #print("1미",notelist[y][1],staff_list[5*i])
             #scale_list.append("1미")
-            notelist[y].insert(4,16)#멜로디 미 E5
+            notelist[y].insert(4,"E5")
         
         elif(staff_list[5*i]+gap/2<notelist[y][1]<staff_list[5*i+1]-gap/2):
             #print("1레",notelist[y][1],staff_list[5*i]+gap)
             #scale_list.append("1레")
-            notelist[y].insert(4,14)#멜로디 레 D5
+            notelist[y].insert(4,"D5")
 
         elif(staff_list[5*i+1]-gap/2<notelist[y][1]<staff_list[5*i+1]+gap/2):
             #print("1도",notelist[y][1],staff_list[5*i+1])
             #scale_list.append("1도")
-            notelist[y].insert(4,12) #멜로디 도 C5
+            notelist[y].insert(4,"C5") 
 
         elif(staff_list[5*i+1]+gap/2<notelist[y][1]<staff_list[5*i+2]-gap/2):
             #print("2시",notelist[y][1],staff_list[5*i+1]+gap)
             #scale_list.append("2시")
-            notelist[y].insert(4,11)#멜로디 시 B4
+            notelist[y].insert(4,"B4")
 
         elif(staff_list[5*i+2]-gap/2<notelist[y][1]<staff_list[5*i+2]+gap/2):
             #print("2라",notelist[y][1],staff_list[5*i+2])
             #scale_list.append("2라")
-            notelist[y].insert(4,9)#멜로디 라 A4
+            notelist[y].insert(4,"A4")
 
         elif(staff_list[5*i+2]+gap/2<notelist[y][1]<staff_list[5*i+3]-gap/2):
             #print("2솔",notelist[y][1],staff_list[5*i+2]+gap)
             #scale_list.append("2솔")
-            notelist[y].insert(4,7)#멜로디 솔 G4
+            notelist[y].insert(4,"G4")
 
         elif(staff_list[5*i+3]-gap/2<notelist[y][1]<staff_list[5*i+3]+gap/2):
             #print("2파",notelist[y][1],staff_list[5*i+3])
             #scale_list.append("2파")
-            notelist[y].insert(4,5)#멜로디 파 F4
+            notelist[y].insert(4,"F4")
 
         elif(staff_list[5*i+3]+gap/2<notelist[y][1]<staff_list[5*i+4]-gap/2):
             #print("2미",notelist[y][1],staff_list[5*i+3]+gap)
             #scale_list.append("2미")
-            notelist[y].insert(4,4)#멜로디 미 E4
+            notelist[y].insert(4,"E4")
 
         elif(staff_list[5*i+4]-gap/2<notelist[y][1]<staff_list[5*i+4]+gap/2):
             #print("2레",notelist[y][1],staff_list[5*i+4])
             #scale_list.append("2레")
-            notelist[y].insert(4,2)#멜로디 레 D4
+            notelist[y].insert(4,"D4")
 
         elif(staff_list[5*i+4]+gap/2<notelist[y][1]<staff_list[5*i+4]+gap*1.5):
             #print("2도",notelist[y][1],staff_list[5*i+4]+gap)
             #scale_list.append("2도")
-            notelist[y].insert(4,0)#멜로디 도 C4
+            notelist[y].insert(4,"C4")
         
         elif(staff_list[5*i+4]+gap*1.5<notelist[y][1]<staff_list[5*i+4]+gap*2.5):
-            notelist[y].insert(4,-1)#멜로디 시 B3
+            notelist[y].insert(4,"B3")
         
         elif(staff_list[5*i+4]+gap*2.5<notelist[y][1]<staff_list[5*i+4]+gap*3.5):
-            notelist[y].insert(4,-3)#멜로디 라 A3
+            notelist[y].insert(4,"A3")
         
         elif(staff_list[5*i+4]+gap*3.5<notelist[y][1]<staff_list[5*i+4]+gap*4.5):
-            notelist[y].insert(4,-5)#멜로디 솔 G3
-
+            notelist[y].insert(4,"G3")
+            
         else:
             notelist[y].insert(4,"미확인")
     
     return notelist
 
-# 박자 인식 05/13
-def tempo_classfication(xylist) :
+# 박자 인식 추가
+def tempo_classfication(notelist) :
 
     np.set_printoptions(suppress=True)
 
@@ -556,7 +451,7 @@ def tempo_classfication(xylist) :
     # 타겟 사이즈 224 X 224 
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-    notelist_path = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/note/'
+    notelist_path = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/note/'
     onlyfiles = [f for f in listdir(notelist_path) if isfile(join(notelist_path, f))]
     onlist = []
     for i in range(len(onlyfiles)):
@@ -571,9 +466,9 @@ def tempo_classfication(xylist) :
     print(onlyfiles)
 
     image = np.empty(len(onlyfiles), dtype = object)
-    tempolist = []
+    #notelist = []
     for item in range(0, len(onlyfiles)) :
-        image[item] = Image.open(join(notelist_path+onlyfiles[item])).convert('RGB')
+        image[item] = Image.open(join(path_dir+onlyfiles[item])).convert('RGB')
         
         image[item] = image[item].resize((224, 224))
         image[item] = ImageOps.fit(image[item], (224, 224), Image.ANTIALIAS, centering = (0.5, 0.5))
@@ -587,180 +482,33 @@ def tempo_classfication(xylist) :
         prediction = model.predict(data)
 
         if(prediction[0][0] > 0.5):
-            xylist[item].append(1/2)
-            #print(onlyfiles[item]," 사진 : 2분음표")
+            notelist[item].insert(5,"2")
+            print(onlyfiles[item]," 사진 : 2분음표")
         elif(prediction[0][1] > 0.5):
-            xylist[item].append(1/2)
-            #print(onlyfiles[item]," 사진 : 2분음표")
+            notelist[item].insert(5,"2")
+            print(onlyfiles[item]," 사진 : 2분음표")
         elif(prediction[0][2] > 0.5):
-            xylist[item].append(1/4)
-            #print(onlyfiles[item]," 사진 : 4분음표")
+            notelist[item].insert(5,"4")
+            print(onlyfiles[item]," 사진 : 4분음표")
         elif(prediction[0][3] > 0.5):
-            xylist[item].append(1/4)
-            #print(onlyfiles[item]," 사진 : 4분음표")
+            notelist[item].insert(5,"4")
+            print(onlyfiles[item]," 사진 : 4분음표")
         elif(prediction[0][4] > 0.5):
-            xylist[item].append(1/8)
-            #print(onlyfiles[item]," 사진 : 8분음표")
+            notelist[item].insert(5,"8")
+            print(onlyfiles[item]," 사진 : 8분음표")
         elif(prediction[0][5] > 0.5):
-            xylist[item].append(1/8)
-            #print(onlyfiles[item]," 사진 : 8분음표")
+            notelist[item].insert(5,"8")
+            print(onlyfiles[item]," 사진 : 8분음표")
         else:
-            xylist[item].append(0)
+            notelist[item].insert(5,"NONE")
             print("음표아님")
 
-    #print(xylist)
-    #print(len(xylist))
-    return xylist
-
-
-#가존 코드와 바꿀 코드의 차이
-def transpose(base, change):
-    if base == 'C':
-        base = 1
-    elif base == 'C#':
-        base = 2
-    elif base == 'D':
-        base = 3
-    elif base == 'D#':
-        base = 4
-    elif base == 'E':
-        base = 5
-    elif base == 'F':
-        base = 6
-    elif base == 'F#':
-        base = 7
-    elif base == 'G':
-        base = 8
-    elif base == 'G#':
-        base = 9
-    elif base == 'A':
-        base = 10
-    elif base == 'A#':
-        base = 11
-    elif base == 'B':
-        base = 12
-    else:
-        print("잘못 입력 하셨습니다.")
-
-    if change == 'C':
-        change = 1
-    elif change == 'C#':
-        change = 2
-    elif change == 'D':
-        change = 3
-    elif change == 'D#':
-        change = 4
-    elif change == 'E':
-        change = 5
-    elif change == 'F':
-        change = 6
-    elif change == 'F#':
-        change = 7
-    elif change == 'G':
-        change = 8
-    elif change == 'G#':
-        change = 9
-    elif change == 'A':
-        change = 10
-    elif change == 'A#':
-        change = 11
-    elif change == 'B':
-        change = 12
-    else:
-        print("잘못 입력 하셨습니다.")
-    gap = change - base
-    return gap
-
-#조변환에 따른 음변환
-def changescale(scalelist,transgap):
-    
-    for i in range(len(scalelist)):
-        if(scalelist[i][3]!='Rest'):
-            print(scalelist[i][3])
-            scalelist[i][3]=scalelist[i][3]+transgap
-    
-    return scalelist
-
-#midi 생성
-def midicreate(notelist):
-    #change_list=[8,5,6,'Rest',1,3]
-    #tempo_list=[1/2,1/2,1/4,1/4,1/2,1/2]
-#0  1  2  3  4  5  6  7  8  9  10  11
-#C  C# D  D# E  F  F# G  G# A  A#  B
-    NoteList = []
-
-    for i in range(len(notelist)):
-        if(notelist[i][3]!='Rest'):
-            NoteList.append(Note(notelist[i][3],dur=notelist[i][2]))
-        else:
-            NoteList.append(Rest(notelist[i][2]))
-
-    print(NoteList)
-    seq = NoteSeq(NoteList)
-        
-    midi = Midi(number_tracks=2, tempo=90)
-    midi.seq_notes(seq, track=0)
-    #midi.seq_notes(notes2, track=0)
-    #midi.write(".vscode//demotest.mid")
-    midi.write("/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/12.mid") # ---------------------------------------------------- 경로 수정
-        
-
-    '''
-    #note_sort_list = [[[0 for col in range(2)] for row in range(50)] for depth in range(len(staff_average)+1)]
-    a=[]
-    cutlist = []
-    num=0
-    checknum=0
-    for i in range(len(notelist)):
-        line = []              # 안쪽 리스트로 사용할 빈 리스트 생성
-        if(start_list[checknum]>i):
-            if(num==0):
-                a.append(cutlist)
-                checknum= checknum+1    
-                num=num+1
-        for j in range(2):
-            line.append(notelist[i][j])     # 안쪽 리스트에 0 추가
-        cutlist.append(line)         # 전체 리스트에 안쪽 리스트를 추가
-    
-    a.append(cutlist)
-    
-    print(a)
-    '''
-
-#pdf to png
-def pdftopng(pdfpath):
-
-    #pdffile = ".vscode//12.pdf"
-    doc = fitz.open(pdfpath)
-    '''
-    page = doc.loadPage(0) #number of page
-    pix = page.getPixmap()
-    output = ".vscode//outfile.png"
-    pix.writePNG(output)
-    '''
-    for i in range(len(doc)):
-        page = doc.loadPage(i)
-        pix = page.getPixmap()
-        output = f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/outfile{i}.png'# ---------------------------------------------------- 경로 수정
-        #output = f".vscode//outfile{i}.png" # ---------------------------------------------------- 경로 수정
-        pix.writePNG(output)
-        
-    return len(doc)
+    return notelist
 
 
 #main
-
-pdfpath = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/test.pdf'  # ---------------------------------------------------- 경로 수정
-#imgpath = '.vscode//12.png'
-#note_search(imgpath)
-
-num = pdftopng(pdfpath)
-
-for i in range(num):
-    imgpath = f'/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/testpdf/outfile{i}.png' # ---------------------------------------------------- 경로 수정
-    #imgpath = f'.vscode//outfile{i}.png'
-    note_search(imgpath)
-    #tempo_classfication()
     
+imgpath = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/test.png'
+note_search(imgpath)
 
 #note_search(imgpath)
