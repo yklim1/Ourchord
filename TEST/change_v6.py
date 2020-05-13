@@ -1,4 +1,3 @@
-#통합 코드 예정-->통신+pdftomidi
 #f_demo.py
 import socketserver
 from os.path import exists
