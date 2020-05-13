@@ -20,7 +20,7 @@ from operator import itemgetter
 standard_detect_gap = 13
 
 HOST = ''
-PORT = 9300
+PORT = myport
 Base=''
 Change=''
 #//home//ec2-user//test//socket_test//test.txt
