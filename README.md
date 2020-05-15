@@ -4,9 +4,9 @@
 > Provide PDF sheet music file to converted MIDI file <br>
 > Provide MIDI file of the user wanrt chord <br>
 # Role
-> 임영규 : Algorithm&OpenCV&Module Integration
-> 김민지 : Server Environment Design    
-> 문지수 : Application&DeepLearning  
+> 임영규 : Algorithm&OpenCV&Module Integration <br>
+> 김민지 : Server Environment Design <br>
+> 문지수 : Application&DeepLearning <br>
 # Detail
 > Library : Tensorflow, OpenCV   
 > Tool : Pychram CE, Visual Studio Code, Android Studio, MySQLWorkbench   
