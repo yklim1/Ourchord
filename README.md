@@ -1,5 +1,5 @@
 # Project Title
-> <h3>Music Score Chord Conversion Program using OpenCV, DeepLearning</h3> <br>
+> <h3>Music Score Chord Conversion Program using OpenCV, DeepLearning</h3> 
 > (ver. 2020 Capstone Design)
 # Main Function
 > Provide PDF sheet music file to converted MIDI file <br>
