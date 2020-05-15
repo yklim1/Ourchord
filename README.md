@@ -5,7 +5,7 @@
 > Provide MIDI file of the user wanrt chord <br>
 # Role
 > 임영규 : Algorithm&OpenCV&Module Integration
-> 김민지 : Server Environment Design   
+> 김민지 : Server Environment Design    
 > 문지수 : Application&DeepLearning  
 # Detail
 > Library : Tensorflow, OpenCV   
