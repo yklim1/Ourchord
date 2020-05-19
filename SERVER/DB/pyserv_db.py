@@ -1,4 +1,5 @@
 #psycopg2말고--> pymysql사용예정
+#python에서 rds접근 test용
 import psycopg2 
 # DB 정보 입력
 conn_string = "host='localhost' " \
