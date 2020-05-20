@@ -11,11 +11,6 @@ PORT = 포트번호
 
 # 연결- 받아올꺼
 class MyTcpHandler(socketserver.BaseRequestHandler):
-    '''def init_base(self,base):
-        self.base = base
-    def init_change(self,change):
-        self.change = change'''
-
     def handle(self):
         global username
         global id
