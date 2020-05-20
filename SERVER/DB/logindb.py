@@ -6,7 +6,7 @@ import numpy as np
 import socketserver
 
 HOST = ''
-PORT = 9300
+PORT = 포트번호
 
 
 # 연결- 받아올꺼
