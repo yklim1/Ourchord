@@ -1,6 +1,6 @@
 import socket
 
-HOST = '13.125.160.38'
+HOST = 'localhost'
 PORT = 9300
 
 def getFileFromServer(filename):
