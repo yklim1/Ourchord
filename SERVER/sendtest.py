@@ -29,6 +29,7 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
         idstr=total.split('-')
         print(idstr)
         
+        #보내는거 할려면 주석 해제
         #result = 'aaa'
         #print("보내기 시작")
         #self.request.send(b'aaa')
