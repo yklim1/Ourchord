@@ -16,15 +16,19 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
 
         print('connect')
 
-        id = self.request.recv(2048)
+        id1 = self.request.recv(2048)
+        id2 = self.request.recv(2048)
+
         #id = self.recv(2048)
-        print("id : ", id)  # ID 잘 들어왔는지 확인
-        id = id.decode()
-        idstr=id.split('-')
+        print("id : ", id1)  # ID 잘 들어왔는지 확인
+        print("id2 : ", id2)  # ID 잘 들어왔는지 확인
+        id1 = id1.decode()
+        id2 = id2.decode()
+        total = id1+id2
+        print(total)
+        idstr=total.split('-')
         print(idstr)
-        print(idstr[0])
-        print(idstr[1])
-        print(idstr[2])
+        
         #result = 'aaa'
         #print("보내기 시작")
         #self.request.send(b'aaa')
