@@ -1,4 +1,4 @@
-# id 중복확인 db
+# id 중복확인
 import pymysql
 import os
 from os.path import exists
