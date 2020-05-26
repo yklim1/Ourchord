@@ -49,7 +49,7 @@ public class conversion extends Fragment {
     private DataOutputStream dos = null;
     private DataInputStream dis;
 
-    private String ip = "13.125.160.38";            // IP 번호
+    private String ip = " ";            // IP 번호
     private int port = 9300;
 
     public static upload_folder newInstance() {
