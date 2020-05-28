@@ -4,7 +4,7 @@ import sys
 
 HOST = ''
 BUFSIZE = 1048576
-PORT = 
+PORT = -
 DIR = '/home/ec2-user/Ourchord/MIDI/14.mid'
 filename = "14.mid"
 
