@@ -1,4 +1,4 @@
-#파일전송
+#mid파일전송
 import socket
 import argparse
 import os
@@ -6,10 +6,12 @@ import sys
 import tempfile
 
 HOST = ''
-PORT = ''
-FILE = '14.mid'
+PORT = 
+BUFSIZE = 1048576
+FILE = '14.mid' #/home/ec2-user/Ourchord/MIDI/12.mid
 
 def run(HOST, PORT, FILE):
+    #with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((HOST, PORT))
@@ -20,16 +22,16 @@ def run(HOST, PORT, FILE):
 
     try:
         sock.sendall(FILE.encode())
-        file_size = int.from_bytes(sock.recv(4096), byteorder="big")
+        file_size = int.from_bytes(sock.recv(BUFSIZE), byteorder="big")
 
         if file_size == 0:
-                print("서버에'" + FILE + "' 없음")
-                return
+            print("서버에'" + FILE + "' 없음")
+            return
 
         print("file name : " + FILE)
         print("size : %d" % file_size)
         print("\n(다운로드 시작)...")
-        sock.sendall(bytes([255]))
+        sock.sendall(bytes([255])) #256
 
         nowdown_size = 0
         downbuff_size = 1048576
