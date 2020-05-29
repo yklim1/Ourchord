@@ -1,56 +1,36 @@
+#sand_pfile.py
 import socket
 import argparse
 import glob
 import os
 import sys
 
-HOST = '-'
+HOST = ''
 #BUFSIZE = 1048576
-PORT = -
+PORT = 
 DIR = '/home/ec2-user/Ourchord/MIDI/14.mid'
 
 def run_server(PORT, DIR):
-    print("연결 대기상태..")
+    print("연결 대기중..")
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        #연결
         sock.bind((HOST, PORT))
         sock.listen(1)
+        conn, addr = sock.accept()
+        print('연결완료: ', addr)
+
+        f = open(DIR, 'rb')
+        data = f.read()
+        print('보낼 데이터: ', data)
+        s_data = conn.sendall(data)
+        print('보낸 데이터: ', s_data)
+        f.close()
+
     except:
-        print('연결안됨')
-        return
+        print("Error: bad request")
 
-    while True:
-        try:
-            conn, addr = sock.accept()
-            print("연결됨")
-            print(conn)
-            print("전송할 파일" + DIR)
-
-            file_list = glob.glob(DIR)
-            if len(file_list) != 1:
-                print(DIR + " 파일없음")
-                conn.sendall(bytes([0]))
-                continue
-            else:
-                file_size = os.path.getsize(DIR)
-                print("file size: %d bytes" % file_size)
-                conn.sendall((file_size).to_bytes(8, byteorder="big"))
-
-            client_status = conn.recv(1)
-            if client_status == bytes([255]):
-                print(DIR + " 전송시작")
-                with open(DIR, "rb") as f:
-                    conn.sendfile(f)
-                conn.sendall(bytes([255].encode()))
-                print(DIR + " 전송완료")
-                # conn.shutdown(SHUT_RDWR)
-                conn.close()
-                print("성공했으니 바로 종료합니다.")
-                break
-            else:
-                print("실패")
-
-        except KeyboardInterrupt:
-            sys.exit(0)
-
+        print('전송성공 후 연결종료')
+        conn.close()
 run_server(PORT, DIR)
