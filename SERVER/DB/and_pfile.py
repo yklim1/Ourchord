@@ -31,6 +31,6 @@ def run_server(PORT, DIR):
     except:
         print("Error: bad request")
 
-        print('전송성공 후 연결종료')
-        conn.close()
+    print('전송성공 후 연결종료')
+    conn.close()
 run_server(PORT, DIR)
