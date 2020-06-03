@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:stretchColumns="2"
+        android:orientation="vertical">
+        <TableRow>
+            <TextView
+                android:layout_span="4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="50dp"
+                android:textSize="30dp"
+                android:fontFamily="@font/gmarketbold"
+                android:text="JOININ"/>
+        </TableRow>
+        <TableRow
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="이름"/>
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:fontFamily="@font/gmarketmedium"
+                android:inputType="text" />
+        </TableRow>
+        <TableRow
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="ID"/>
+            <EditText
+                android:id="@+id/input_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:layout_span="2"
+                android:fontFamily="@font/gmarketmedium" />
+            <Button
+                android:id="@+id/checkid_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#ffffff"
+                android:background="@drawable/pink_btn"
+                android:text="중복확인"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="PW"/>
+            <EditText
+                android:id="@+id/input_pw"
+                android:layout_span="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:fontFamily="@font/gmarketmedium" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/pw_check"
+                android:layout_span="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/gmarketmedium"
+                android:textSize="10dp"
+                android:text="8자 이상 16자 이하의 영문, 숫자, 특수문자 조합"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="PW 확인"/>
+            <EditText
+                android:id="@+id/input_pw_check"
+                android:layout_span="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:fontFamily="@font/gmarketmedium" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/pw_correct_check"
+                android:layout_span="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="@color/pink_1"
+                android:textSize="10dp" />
+        </TableRow>
+        <TableRow
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="E-MAIL" />
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:fontFamily="@font/gmarketlight"
+                android:inputType="textEmailAddress" />
+            <Button
+                android:id="@+id/autocode_btn"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#ffffff"
+                android:background="@drawable/pink_btn"
+                android:text="인증코드"/>
+        </TableRow>
+        <TableRow
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="인증코드" />
+            <EditText
+                android:id="@+id/input_authcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:inputType="text"
+                android:fontFamily="@font/gmarketmedium" />
+            <Button
+                android:id="@+id/authcheck_btn"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#ffffff"
+                android:background="@drawable/pink_btn"
+                android:text="확인"/>
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:id="@+id/joinin_btn"
+        android:layout_width="700px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/gmarketmedium"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_btn"
+        android:text="회원가입" />
+</LinearLayout>

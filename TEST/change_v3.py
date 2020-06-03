@@ -508,7 +508,7 @@ def tempo_classfication(notelist) :
 
 #main
     
-imgpath = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/test.png'
+imgpath = '/Users/zjisuoo/Documents/학교/OurChord/CODE/TEST/PDF/t'
 note_search(imgpath)
 
 #note_search(imgpath)

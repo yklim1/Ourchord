@@ -1,9 +1,6 @@
 import socket
 import time
 
-# host = '13.125.160.38/' # Symbolic name meaning all available interfaces
-# host = 'ec2-13-125-160-38.ap-northeast-2.compute.amazonaws.com'
-# host = '0.0.0.0'
 host = '127.0.0.1'
 port = 9300 # Arbitrary non-privileged port
  

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/gmarketmedium"
+        android:text="조변환 할 악보를 선택해주세요."/>
+
+    <Spinner
+        android:id="@+id/conviersion_sheet"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="BASE"/>
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="C" />
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="C#" />
+                <RadioButton
+                    android:id="@+id/radio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="D" />
+                <RadioButton
+                    android:id="@+id/radio3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="D#" />
+                <RadioButton
+                    android:id="@+id/radio4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="E" />
+                <RadioButton
+                    android:id="@+id/radio5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="F" />
+                <RadioButton
+                    android:id="@+id/radio6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="F#" />
+                <RadioButton
+                    android:id="@+id/radio7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="G" />
+                <RadioButton
+                    android:id="@+id/radio8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="G#" />
+                <RadioButton
+                    android:id="@+id/radio9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="A" />
+                <RadioButton
+                    android:id="@+id/radio10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="A#" />
+                <RadioButton
+                    android:id="@+id/radio11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="B" />
+                <RadioButton
+                    android:id="@+id/radio12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="B#" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="300px"
+            android:layout_height="100px"
+            android:src="@drawable/arrow"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:text="CHANGE"/>
+                <RadioGroup
+                    android:id="@+id/radioGroup2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                    <RadioButton
+                        android:id="@+id/radio_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:checked="true"
+                        android:text="C" />
+                    <RadioButton
+                        android:id="@+id/radio_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="C#" />
+                    <RadioButton
+                        android:id="@+id/radio_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="D" />
+                    <RadioButton
+                        android:id="@+id/radio_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="D#" />
+                    <RadioButton
+                        android:id="@+id/radio_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="E" />
+                    <RadioButton
+                        android:id="@+id/radio_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="F" />
+                    <RadioButton
+                        android:id="@+id/radio_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="F#" />
+                    <RadioButton
+                        android:id="@+id/radio_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="G" />
+                    <RadioButton
+                        android:id="@+id/radio_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="G#" />
+                    <RadioButton
+                        android:id="@+id/radio_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="A" />
+                    <RadioButton
+                        android:id="@+id/radio_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="A#" />
+                    <RadioButton
+                        android:id="@+id/radio_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="B" />
+                    <RadioButton
+                        android:id="@+id/radio_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gmarketmedium"
+                        android:textColor="#949596"
+                        android:text="B#" />
+                </RadioGroup>
+            </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/output_chord_conversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gmarketmedium"
+        android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/chord_conversion_btn"
+        android:layout_gravity="center"
+        android:layout_width="700px"
+        android:layout_height="100px"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/gmarketmedium"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_btn"
+        android:text="CHORD CONVERSION" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/gmarketmedium"
+        android:textColor="#949596"
+        android:text="조옮김 된 MIDI 파일과 기존 악보의" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/gmarketmedium"
+        android:textColor="#949596"
+        android:text="MIDI 파일이 함께 제공됩니다." />
+</LinearLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/C_chord"
+                android:onClick="mOnClick"
+                android:background="@android:drawable/editbox_background_normal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/D_chord"
+                android:onClick="mOnClick"
+                android:background="@android:drawable/editbox_background_normal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/E_chord"
+                android:onClick="mOnClick"
+                android:background="@android:drawable/editbox_background_normal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/F_chord"
+                android:onClick="mOnClick"
+                android:background="@android:drawable/editbox_background_normal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/G_chord"
+                android:onClick="mOnClick"
+                android:background="@android:drawable/editbox_background_normal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/A_chord"
+                android:onClick="mOnClick"
+                android:background="@android:drawable/editbox_background_normal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/B_chord"
+                android:onClick="mOnClick"
+                android:background="@android:drawable/editbox_background_normal" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:id="@+id/Cup_chord"
+                android:onClick="mOnClick"
+                android:layout_gravity="right"
+                android:layout_marginTop="60dp"
+                android:background="@android:drawable/screen_background_dark" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:id="@+id/Dup_chord"
+                android:onClick="mOnClick"
+                android:layout_gravity="right"
+                android:layout_marginTop="30dp"
+                android:background="@android:drawable/screen_background_dark" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:id="@+id/Fup_chord"
+                android:onClick="mOnClick"
+                android:layout_gravity="right"
+                android:layout_marginTop="120dp"
+                android:background="@android:drawable/screen_background_dark" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:id="@+id/Gup_chord"
+                android:onClick="mOnClick"
+                android:layout_gravity="right"
+                android:layout_marginTop="30dp"
+                android:background="@android:drawable/screen_background_dark" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:id="@+id/Aup_chord"
+                android:onClick="mOnClick"
+                android:layout_gravity="right"
+                android:layout_marginTop="30dp"
+                android:background="@android:drawable/screen_background_dark" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
