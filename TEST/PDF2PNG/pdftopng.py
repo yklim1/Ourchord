@@ -24,8 +24,10 @@ pix = page.getPixmap()
 output = ".vscode//outfile.png"
 pix.writePNG(output)
 '''
+#확대를 하여 png 화질을 높힌다.
+zoom=3
 for i in range(len(doc)):
     page = doc.loadPage(i)
-    pix = page.getPixmap()
+    pix = page.getPixmap(matrix = mat)
     output = f".vscode//outfile{i}.png"
     pix.writePNG(output)

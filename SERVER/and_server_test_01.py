@@ -1,6 +1,11 @@
 import socket
 import time
 
+<<<<<<< HEAD
+=======
+
+# host = '0.0.0.0'
+>>>>>>> 6a18104ae48c501dbb035979f7d686d67f0be9b4
 host = '127.0.0.1'
 port = 9300 # Arbitrary non-privileged port
  
