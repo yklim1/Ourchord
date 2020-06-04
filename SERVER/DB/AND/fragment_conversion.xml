@@ -1,0 +1,51 @@
+<!--
+    test: '악보1 업로드'버튼 누르면 android는 서버가 보낸 midi파일 받기
+-->
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/gmarketmedium"
+        android:text="조변환 할 악보를 선택해주세요."/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/upload_1_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="100px"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/blue_btn"
+            android:fontFamily="@font/gmarketmedium"
+            android:textColor="#ffffff"
+            android:text="미디 받아오기"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/output_chord_conversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/chord_conversion_btn"
+        android:layout_gravity="center"
+        android:layout_width="700px"
+        android:layout_height="100px"
+        android:fontFamily="@font/gmarketmedium"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_btn"
+        android:text="CHORD CONVERSION" />
+</LinearLayout>
