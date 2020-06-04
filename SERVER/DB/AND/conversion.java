@@ -1,4 +1,4 @@
-#conversion.java에서 mid송수신 test
+//기존conversion.java에서 mid송수신 test 
 package com.example.ourchord_app;
 
 import android.content.Context;
