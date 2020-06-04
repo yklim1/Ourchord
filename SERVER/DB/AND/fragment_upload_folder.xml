@@ -1,0 +1,28 @@
+#기존 fragment_upload_folder.xml에서 mid송수신 test
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".upload_folder">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="300dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/upload_1_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/blue_btn"
+            android:fontFamily="@font/gmarketmedium"
+            android:textColor="#ffffff"
+            android:text="미디 받아오기"/>
+
+    </LinearLayout>
+
+</FrameLayout>
