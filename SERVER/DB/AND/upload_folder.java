@@ -1,4 +1,4 @@
-#upload_folder.java에서 mid송수신 test
+//기존 upload_folder.java에서 mid송수신 test 작업
 package com.example.ourchord_app;
 
 import android.app.DownloadManager;
