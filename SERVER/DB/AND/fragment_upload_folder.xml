@@ -1,4 +1,6 @@
-#기존 fragment_upload_folder.xml에서 mid송수신 test
+<!--
+    test: '악보1 업로드'버튼 누르면 android는 서버가 보낸 midi파일 받기
+-->
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
