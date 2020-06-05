@@ -2,20 +2,11 @@
     test: '악보1 업로드'버튼 누르면 android는 서버가 보낸 midi파일 받기
 -->
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_gravity="center"
-        android:fontFamily="@font/gmarketmedium"
-        android:text="조변환 할 악보를 선택해주세요."/>
 
     <LinearLayout
         android:layout_width="wrap_content"
