@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -35,6 +37,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -77,9 +80,9 @@ public class conversion extends Fragment {
         upload_1_btn  = (Button) fv.findViewById(R.id.upload_1_btn);
         upload_1_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View fv){
-                System.out.println("1.pdf 변환");
+                System.out.println("미디추가");
                 String mid = "12.mid"; ///위치: home/ec2-user/Ourchord/MIDI
-                connect(mid);
+                connect();
             }
         });
 
@@ -91,7 +94,7 @@ public class conversion extends Fragment {
     //size수정
     public static final int DEFAULT_BUFFER_SIZE = 1048576;
 
-    void connect(final String Mid) { //String Mid에 12.mid
+    void connect() { //String Mid에 12.mid
         mHandler = new Handler();
 
         Log.w("connect", "연결 하는중");
@@ -110,35 +113,34 @@ public class conversion extends Fragment {
                 Log.w("edit 넘어가야 할 값 : ", "안드로이드에서 서버로 연결요청");
 
                 try {
-                    /*InputStream in = socket.getInputStream();
+                    //바이트 단위로 데이터를 읽는다, 외부로 부터 읽어들이는 역할을 담당
+                    InputStream is = socket.getInputStream();
                     Log.d("바이트 단위로 읽었어", "읽음");
+                    System.out.println(is);
+
+                    //파일 읽기
+                    BufferedInputStream bis = new BufferedInputStream(is);
+                    Log.d("파일 읽었어", "읽음");
+                    System.out.println(bis);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    FileOutputStream output = new FileOutputStream("/data/data/com.example.ourchord_app/result.mid");
+                    System.out.println("파일 경로: "+output);
+                    InputStream in = socket.getInputStream();
                     System.out.println(in);
 
-                    BufferedInputStream bis = new BufferedInputStream(in);
-                    Log.d("파일 읽었어", "읽음");
-                    System.out.println(bis);*/
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                    //한줄
-                    String str = in.readLine();
-                    //while(str!=null){
-                        //Scanner scan = new Scanner(in);
-                        System.out.println("수신중인 파일이름: " +str);
-                    //}
-                    //File f = new File("C:/file", "12.mid");
-                    FileOutputStream output = new FileOutputStream("C://file//12.mid");
-                    byte[] buf = new byte[1048576];
-                    output.write(buf);
-                    /*int readBytes;
-
-                    while((readBytes = socket.getInputStream().read(buf))!=-1){
-                        //output.write(buf,0,readBytes);
-                        output.write(buf);
-                    }*/
-
-                    in.close();
+                        String str = null;
+                        while((str=br.readLine())!=null){
+                            //str = br.readLine(); // for 0~ eof
+                            byte[] buf = new byte[1048576];
+                            //str = in.read(buf, 0, buf.length);
+                            System.out.println("수신중인 파일내용: " +str);
+                            output.write(str.getBytes());
+                            Log.d("line 저장완료","저장됨");
+                        }
+                    br.close();
                     output.close();
-                    System.out.println(str+"수신완료");
+                    //output.close();
+                    System.out.println("수신완료");
 
                 } catch (IOException e) {
                     e.printStackTrace();
