@@ -18,7 +18,7 @@ connect = pymysql.connect(host="localhost",
                               user="사용자이름",
                               password="비번",
                               db="DB이름")
-# aws rds 에서 cursor(쿼리문에 의해서 반환되는 결과값을 저장하는 메모리 공간)얻기
+
 # cursor = connect.cursor(pymysql.cursors.DictCursor)
 cursor = connect.cursor()
 
@@ -26,20 +26,16 @@ cursor = connect.cursor()
 class MyTcpHandler(socketserver.BaseRequestHandler):
     def handle(self):
         print('connect')
-        # ---------------------화면 바뀔때마다 MyTcpHandler실행---------------------
-        # 화면 구분할 배열 선언: android에서 string으로 보내는걸 배열로 받아야함
-        # 1.화면 구분: display변수에 string으로 받기
+        
         display = self.request.recv(2048)
 
-        # 2.display값 배열에 저장
-        # 다른방법: tdata = display.split("-") 문자열 display내용을 -구분자로 나누어서 리스트에 저장하기
-        tdata = display.split()  # 문자열 '스페이스'로 구분하여 리스트에 저장
-        global impdata  # 로그인 시, id 정보를 저장할 impdata global 변수 선언
-        print(tdata)  # t(otal)data배열에 잘 저장되었는지 확인
+        tdata = display.split()  
+        global impdata 
+        print(tdata)  
 
         # ---------------------화면별 받은 정보 저장 이후 ---------------------
         # 3.로그인 화면(login) ex) "login, id, pwd"
-        # !!!!!이 정보는 계속 가지고 가야함 -> 사용자 정보 수정/ pdf / mid 파일 제공 시 필요!!!!!
+        
         if (tdata[0] == 'login'):
             print("##로그인 정보를 확인 합니다.##\n\n")
             impdata = tdata[1]  # id는 중복되지 않으므로 id만 저장
@@ -64,7 +60,7 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
             print("##인증코드 확인을 시작합니다.##\n\n")
             checkAuthDB(regid, tdata[1], tdata[2])
 
-        # 4-4.회원가입 내용 저장 화면(register)-id 중복 통과 이후 *id 중복 통과 이후 저장 가능한거 앱에서?
+        
         # ex) "register, username, id, pwd, email"
         '''if(tdata[0] == 'register'):
             print("##회원가입 내용 저장을 시작합니다.##\n\n")
@@ -106,17 +102,17 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
                         break
             os.replace(temp_name, pfile_name)
 
-        # 6.주요 알고리즘 실행: import(conversion)-여기에 mid.py까지 통합 or 실행하고 아래 코드 실행
+        
         if (tdata[0] == 'conversion'):
-            # /home/ec2-user/Ourchord/conversion.py는 코드 실행 후, 서버에 mid저장까지
+            
             print("##조 변환과 미디 생성 알고리즘이 동작됩니다.##\n\n")
             import conversion
 
-        # 7.서버에서 생성된 mid 파일 앱으로 전송(midiupload_folder): 서버 mid경로에 있는 모든 mid파일 가져오기
+        
         if (tdata[0] == 'midiupload_folder'):
             print("##생성된 mid 파일을 앱으로 전송합니다.##\n\n")
             MID_DIR = '/home/ec2-user/Ourchord/MIDI/'
-            # 기존에 안드로이드에 저장된 파일은 제외하고 전송하고 싶은데(안드에서 설정해야 할듯?)
+            
             mfile_list = glob.glob(MID_DIR)
             if len(mfile_list) != 1:
                 print(MID_DIR + "파일이 없습니다.")
@@ -137,23 +133,18 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
                     self.request.sendall(data)
                     print(file_list[i] + " 전송완료")
 
-        # 8.ID 찾기 화면(find_id)#이거는 앱에서 직접?
+        
         # ex) "find_id, username, email"
-        # 앱에서 이메일 보내는데 그 이메일에 담긴 id 내용은 서버에서 보내줘야하는거지
+        
         if (tdata[0] == 'find_id'):
             print("##id를 찾습니다.##\n\n")
 
-            # db 에서 id 찾기 - 'username'과 'email' 모두 동일해야 함
-
-            # 해당 id 앱으로 전송
-
-        # 9.PWD 찾기 화면(find_pw)#이거는 앱에서 직접?
         # ex) "find_pw, id, email"
         '''if (tdata[0] == 'find_pw'):
             print("##pwd를 찾습니다.##\n\n")'''
 
         # 10.개인정보 수정화면(my)
-        # pwd는 수정x? -ppt
+        
         # ex) "my, username, id, email"
         if (tdata[0] == 'my'):
             print("##개인정보를 수정합니다.##\n\n")
@@ -218,15 +209,8 @@ def AuthDB(username, uid, pwd, email):
 def checkAuthDB(regid, Auth, checkAuth):
     print('checkAuthDB 연동 완료')
 
-    # 이메일로 받은 인증코드 추가로 저장(id 찾고 Auth update)
-    # id로 인증코드 비교 확인(id 찾고 Auth update)
 
     "UPDATE USER SET USERNAME=%s, ID=%s, EMAIL=%s WHERE ID=%s"
-    # 현재 회원가입 중인 사용자 id로 행 뽑기
-    # sql1 = "SELECT *FROM USER WHERE ID=%S"
-    # cursor.execute(sql1, regid)
-
-    # 현재 회원가입 중인 사용자 id로 행 뽑아서 AUTH에 인증코드 집어넣기
     sql = "UPDATE USER SET AUTH= %s WHERE(SELECT *FROM USER WHERE ID=%s)"
     cursor.execute(sql, (Auth, regid))
 
@@ -246,7 +230,7 @@ def checkAuthDB(regid, Auth, checkAuth):
 '''def registerDB(username, id, pwd, email):
     print('registerDB 연동 완료')
 
-    #지금 db에 cpwd도 있어서 pwd두번 저장함
+
     if (cursor.execute("INSERT INTO USER(USERNAME, ID, PWD, EMAIL, AUTH) values(username, id, pwd, email)")):
         print('USER 테이블 삽입성공')
         return runServer.register(suc)
@@ -258,9 +242,6 @@ def checkAuthDB(regid, Auth, checkAuth):
 # my DB 연동
 def myDB(uid, username, rid, email):
     print('myDB 연동 완료')
-    # pwd 추가 필요하면 추가하기
-    # 1.USER 테이블에서 id와 같은 id 찾고 해당 사용자 정보 수정하기
-    # AND 말고 ,
     sql = "UPDATE USER SET USERNAME=%s, ID=%s, EMAIL=%s WHERE ID=%s"
     try:
         cursor.execute(sql, (username, uid, email, rid))
@@ -277,7 +258,7 @@ def myDB(uid, username, rid, email):
 def runServer():
     print('서버시작')
     try:
-        # 1. 사용자가 화면 실행할때마다 MyTcpHandler함수에서 배열 update
+        
         server = socketserver.TCPServer((HOST, PORT), MyTcpHandler)
 
     except KeyboardInterrupt:
