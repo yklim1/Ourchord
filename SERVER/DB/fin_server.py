@@ -1,4 +1,4 @@
-# 서버통합: id는 내장함수이므로 uid로 수정하기
+# 서버통합
 import pymysql
 import socketserver
 import glob
