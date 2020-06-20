@@ -260,6 +260,7 @@ def runServer():
     try:
         
         server = socketserver.TCPServer((HOST, PORT), MyTcpHandler)
+        server.serve_forever()
 
     except KeyboardInterrupt:
         print('서버를 종료합니다')
