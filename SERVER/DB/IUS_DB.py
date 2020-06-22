@@ -11,22 +11,22 @@ connect = pymysql.connect(host="",
 
 cursor = connect.cursor()
 
-# EXISTS 테스트------------------------------------------------------------------
+# EXISTS 
 sql ="SELECT EXISTS(SELECT *FROM USER WHERE ID=%s AND PWD=%s)"
 res = cursor.execute(sql, (uid, pwd))
 result = cursor.fetchone()
 row_count = result[0]
 print(row_count)
 
-if (row_count > 0):  # 수정: line193의 결과가 있으면 print("정보있음)
+if (row_count > 0):  
     connect.commit()
-    print('정보있음')  # 정보 있음도 sql문을 실행하고 결과값이 있을때 출력함
+    print('정보있음')  
     impdata = uid
     print("impdata는", uid)
 else:
     print('정보없음')
 
-# INSERT 테스트------------------------------------------------------------------
+# INSERT
 cursor.execute("SELECT * FROM USER")
 before = cursor.rowcount
 print('before: ', before)
@@ -43,7 +43,7 @@ if(before < after):
     print('삽입 성공')
 
 
-# UPDATE 테스트------------------------------------------------------------------
+# UPDATE
 sql1 ="UPDATE USER SET PWD=%s WHERE USERNAME=%s"
 cursor.execute(sql1, ('622', uid))
 #print(res)
