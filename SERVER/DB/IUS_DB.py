@@ -33,7 +33,7 @@ print('before: ', before)
 
 uid = 'user7'
 sql ="INSERT INTO USER(USERNAME, ID, PWD, EMAIL, AUTH) values(%s, %s, %s, %s, '')"
-cursor.execute(sql, (uid, 'uu1', '0622', 'u@kpu.ac.kr'))
+cursor.execute(sql, (uid, 'uu1', '0622', 'u@korea.ac.kr'))
 
 cursor.execute("SELECT * FROM USER")
 after = cursor.rowcount
