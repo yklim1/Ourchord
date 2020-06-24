@@ -13,7 +13,7 @@ BUFSIZE = 1048576
 PORT = 9300  # 9330
 suc = 's'
 fail = 'f'
-# /home/ec2-user/Ourchord/USER 에서 사용자 이름(id)만 구분하고 mid랑 pdf같이 저장하기
+
 SPDF_DIR = '/home/ec2-user/Ourchord/USER/'
 
 connect = pymysql.connect(host="localhost",
@@ -21,8 +21,6 @@ connect = pymysql.connect(host="localhost",
                               user="사용자이름",
                               password="비번",
                               db="DB이름")
-# aws rds 에서 cursor(쿼리문에 의해서 반환되는 결과값을 저장하는 메모리 공간)얻기
-# cursor = connect.cursor(pymysql.cursors.DictCursor)
 cursor = connect.cursor()
 
 
@@ -51,7 +49,6 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
         # ---------------------화면별 받은 정보 저장 이후 ---------------------
         ##############3.로그인 화면(login)##############
         # ex) "login, id, pwd"
-        # !!!!!id 정보는 계속 가지고 가야함 -> 사용자 정보 수정/ pdf / mid 파일 제공 시 필요!!!!!
         if (tdata[0] == 'login'):
             print("##로그인 정보를 확인 합니다.##\n\n")
             loginDB(tdata[1], tdata[2])
@@ -70,10 +67,6 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
             # -> '회원가입 완료'할때까지 DB에 접근하지 않기 위함
             global auth_tdata
             auth_tdata = tdata
-
-            # 여기서는 따로 앱에 return 해주지 않아도 될듯
-            # 인증코드 저장은 '회원가입 버튼'에서 하는게 좋지 않을까 생각
-            # AuthDB(tdata[1], tdata[2], tdata[3], tdata[4], tdata[5])
 
         ##############4-3. 회원가입:확인 버튼(checkAuth)##############
         # ex) "checkAuth, (사용자가 입력한 인증코드)checkAuth"
@@ -169,9 +162,6 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
             # /home/ec2-user/Ourchord/modify.py는 코드 실행 후, 서버에 mid저장까지
             print("##조 변환과 미디 생성 알고리즘이 동작됩니다.##\n\n")
 
-            # PDF 폴더를 업로드 하는 과정에서 ID에 해당하는 디렉토리는 생성된 상태임: pdir(ex)/home/ec2-user/Ourchord/USER/flottante)
-            # modify.py로 전송: pdir, 기존 조, 변환 조, pfile_name에서 확장자 제외한 파일이름
-
             # 확장자를 제외한 파일 이름 저장하기
             fn = list(pfile_name)
 
@@ -182,11 +172,6 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
 
             print("modify.py에 전달해줄 PDF 이름만 뽑았습니다.: ", rpfile_name)
 
-            # modify.py에서 해당 정보를 받는곳에 return
-            # mid로 변환하는 cmid() 함수가 modify.py에 있다는 가정하에 전송함
-
-            # modify.py로 전송: pdir, 박자, 기존 조, 변환 조, pfile_name에서 확장자 제외한 파일이름
-            # modify.cmid(pdir, tdata[1], tdata[2], tdata[3], rpfile_name)
 
             # 박자 제외
             modify.cmid(pdir, tdata[1], tdata[2], rpfile_name)
@@ -240,7 +225,6 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
 
         ##############8.ID 찾기 화면(find_id)##############
         # ex) "find_id, username, email"
-        # 앱에서 이메일 보내는데 그 이메일에 담긴 id 내용은 서버에서 보내줘야하는거지
         if (tdata[0] == 'find_id'):
             print("##id를 찾습니다.##\n\n")
 
@@ -257,12 +241,9 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
         # ex) "my, username, id, email"
         if (tdata[0] == 'my'):
             print("##개인정보를 수정합니다.##\n\n")
-            # 누구의 정보(impdata -> 현재 사용중인 사용자의 id)를
-            # 어떻게 수정할지(tdata -> username, id, email)
             myDB(impdata, tdata[1], tdata[2], tdata[3])
 
 
-# *모든 return값은 sql문 실행 시, (sql실행유무가 아닌)데이터가 존재 하면!*
 # -------------------------------login DB 연동-------------------------------#
 # -> sql 성공 시, id값 impdata 저장
 def loginDB(uid, pwd):
