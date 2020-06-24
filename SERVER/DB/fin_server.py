@@ -5,7 +5,8 @@ import glob
 import os
 import tempfile
 import sys
-# import modify
+
+# import modify # modify.py import함
 
 HOST = ''
 BUFSIZE = 1048576
@@ -20,14 +21,16 @@ connect = pymysql.connect(host="localhost",
                               user="사용자이름",
                               password="비번",
                               db="DB이름")
-
+# aws rds 에서 cursor(쿼리문에 의해서 반환되는 결과값을 저장하는 메모리 공간)얻기
+# cursor = connect.cursor(pymysql.cursors.DictCursor)
 cursor = connect.cursor()
 
 
 class MyTcpHandler(socketserver.BaseRequestHandler):
     def handle(self):
         print('connect')
-
+        # ---------------------화면 바뀔때마다 MyTcpHandler실행---------------------
+        # 화면 구분할 배열 선언: android에서 string으로 보내는걸 배열로 받아야함
         ##############1.화면 구분##############
         # display변수에 string으로 받기
         display = self.request.recv(2048)
@@ -45,18 +48,22 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
 
         global impdata  # 로그인 성공한 id값 저장
 
+        # ---------------------화면별 받은 정보 저장 이후 ---------------------
         ##############3.로그인 화면(login)##############
         # ex) "login, id, pwd"
+        # !!!!!id 정보는 계속 가지고 가야함 -> 사용자 정보 수정/ pdf / mid 파일 제공 시 필요!!!!!
         if (tdata[0] == 'login'):
             print("##로그인 정보를 확인 합니다.##\n\n")
             loginDB(tdata[1], tdata[2])
 
         ##############4-1.회원가입:id 중복확인(checkid)##############
+        # ex) "id_check, id"
         if (tdata[0] == 'id_check'):
             print("##id 중복확인을 시작합니다.##\n\n")
             checkidDB(tdata[1])
 
         ##############4-2. 회원가입:인증코드 버튼(Auth)##############
+        # ex) "Auth, username, id, pwd, email, Auth(발급받은 인증코드)"
         if (tdata[0] == 'Auth'):
             print("##인증코드 버튼에서 회원가입 내용 저장을 시작합니다.##\n\n")
             # tdata 배열 데이터 그대로 auth_tdata 배열에 저장
@@ -64,7 +71,12 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
             global auth_tdata
             auth_tdata = tdata
 
+            # 여기서는 따로 앱에 return 해주지 않아도 될듯
+            # 인증코드 저장은 '회원가입 버튼'에서 하는게 좋지 않을까 생각
+            # AuthDB(tdata[1], tdata[2], tdata[3], tdata[4], tdata[5])
+
         ##############4-3. 회원가입:확인 버튼(checkAuth)##############
+        # ex) "checkAuth, (사용자가 입력한 인증코드)checkAuth"
         if (tdata[0] == 'checkAuth'):
             print("##인증코드 확인을 시작합니다.##\n\n")
             # checkAuthDB(auth_tdata[2], tdata[1])
@@ -82,6 +94,7 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
             registerDB(auth_tdata[1], auth_tdata[2], auth_tdata[3], auth_tdata[4], auth_tdata[5])
 
         ##############5.서버로 pdf 파일 받아서 저장(upload_folder)##############
+        # ex) "upload_folder-pdf이름"
         if (tdata[0] == 'upload_folder'):
             print("##앱에 저장 된 pdf 파일을 서버에 저장합니다.##\n\n")
             # pfile_name = self.request.recv(2048)  # pdf 이름 저장
@@ -194,6 +207,7 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
 
             conversionmidi_path = pdir + conversionmidi_name
 
+            # MIDI_ID(impdata), BASEMIDI_NAME, BASEMIDI_PATH, CONVERSIONMIDI_NAME, CONVERSIONMIDI_PATH
             conversionDB(impdata, basemidi_name, basemidi_path, conversionmidi_name, conversionmidi_path)
 
         ##############7.서버에서 생성된 mid 파일 앱으로 전송(midiupload_folder)##############
@@ -247,7 +261,10 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
             # 어떻게 수정할지(tdata -> username, id, email)
             myDB(impdata, tdata[1], tdata[2], tdata[3])
 
+
+# *모든 return값은 sql문 실행 시, (sql실행유무가 아닌)데이터가 존재 하면!*
 # -------------------------------login DB 연동-------------------------------#
+# -> sql 성공 시, id값 impdata 저장
 def loginDB(uid, pwd):
     print('loginDB 연동 완료')
 
@@ -302,6 +319,7 @@ def registerDB(username, id, pwd, email, auth):
     print("after: ", after)
 
     if (before < after):
+        connect.commit()
         print('USER 데이터 삽입 성공')
         return runServer.register(suc)
     else:
@@ -317,20 +335,27 @@ def upload_folderDB(pdf_id, pdf_name, pdf_path):
     before = cursor.rowcount
     print('before: ', before)
 
-    uid = 'user7'
-    sql = "INSERT INTO USER_SCORE_PDF(PDF_ID, PDF_NAME, PDF_PATH) values(%s, %s, %s)"
+    sql = "SELECT EXISTS(SELECT *FROM USER_SCORE_PDF WHERE PDF_ID=%s AND PDF_NAME=%s AND PDF_PATH=%s)"
     cursor.execute(sql, (pdf_id, pdf_name, pdf_path))
+    result = cursor.fetchone()  # fetchone(): 모든 데이터를 한번에 가져옴
+    row_count = result[0]
 
-    cursor.execute("SELECT * FROM USER_SCORE_PDF")
-    after = cursor.rowcount
-    print("after: ", after)
-
-    if (before < after):
-        print('upload_folder 데이터 삽입 성공')
-        return runServer.upload_folder(suc)
-    else:
-        print('upload_folder 데이터 삽입 실패')
+    if (row_count > 0):  # 중복o
+        print('기존에 있는 upload_folder 데이터 입니다.')
         return runServer.upload_folder(fail)
+
+    else:
+        sql = "INSERT INTO USER_SCORE_PDF(PDF_ID, PDF_NAME, PDF_PATH) values(%s, %s, %s)"
+        cursor.execute(sql, (pdf_id, pdf_name, pdf_path))
+
+        cursor.execute("SELECT * FROM USER_SCORE_PDF")
+        after = cursor.rowcount
+        print("after: ", after)
+
+        if (before < after):
+            connect.commit()
+            print('upload_folder 데이터 삽입 성공')
+            return runServer.upload_folder(suc)
 
 
 # -------------------------------conversion DB 연동-------------------------------#
@@ -341,19 +366,27 @@ def conversionDB(impdata, basemidi_name, basemidi_path, conversionmidi_name, con
     before = cursor.rowcount
     print('before: ', before)
 
-    sql = "INSERT INTO USER_SCORE_MIDI(MIDI_ID, BASEMIDI_NAME, BASEMIDI_PATH, CONVERSIONMIDI_NAME, CONVERSIONMIDI_PATH) values(%s, %s, %s, %s, %s)"
-    cursor.execute(sql, (impdata, basemidi_name, basemidi_path, conversionmidi_name, conversionmidi_path))
+    sql = "SELECT EXISTS(SELECT *FROM USER_SCORE_MIDI WHERE MIDI_ID=%s AND BASEMIDI_NAME=%s AND CONVERSIONMIDI_NAME=%s)"
+    cursor.execute(sql, (impdata, basemidi_name, conversionmidi_name))
+    result = cursor.fetchone()  # fetchone(): 모든 데이터를 한번에 가져옴
+    row_count = result[0]
 
-    cursor.execute("SELECT * FROM USER_SCORE_MIDI")
-    after = cursor.rowcount
-    print("after: ", after)
-
-    if (before < after):
-        print('MIDI 정보 데이터 삽입 성공')
-        return runServer.conversion(suc)
-    else:
-        print('MIDI 정보 데이터 삽입 실패')
+    if (row_count > 0):  # 중복o
+        print('기존에 있는 MIDI 데이터 입니다.')
         return runServer.conversion(fail)
+
+    else:
+        sql = "INSERT INTO USER_SCORE_MIDI(MIDI_ID, BASEMIDI_NAME, BASEMIDI_PATH, CONVERSIONMIDI_NAME, CONVERSIONMIDI_PATH) values(%s, %s, %s, %s, %s)"
+        cursor.execute(sql, (impdata, basemidi_name, basemidi_path, conversionmidi_name, conversionmidi_path))
+
+        cursor.execute("SELECT * FROM USER_SCORE_MIDI")
+        after = cursor.rowcount
+        print("after: ", after)
+
+        if (before < after):
+            connect.commit()
+            print('MIDI 정보 데이터 삽입 성공')
+            return runServer.conversion(suc)
 
 
 # -------------------------------find_id DB 연동-------------------------------#
@@ -367,8 +400,10 @@ def find_idDB(username, email):
     # print(row_count)
 
     if (row_count > 0):
+        connect.commit()
         sql = "SELECT ID FROM USER WHERE USERNAME=%s AND EMAIL=%s"
         cursor.execute(sql, (username, email))
+        connect.commit()
         id = cursor.fetchall()
         print("전처리 전: ", id)
 
@@ -395,8 +430,10 @@ def find_pwdDB(id, email):
     # print(row_count)
 
     if (row_count > 0):
+        connect.commit()
         sql = "SELECT PWD FROM USER WHERE ID=%s AND EMAIL=%s"
         cursor.execute(sql, (id, email))
+        connect.commit()
         pwd = cursor.fetchall()
         print("전처리 전: ", pwd)
 
@@ -424,6 +461,7 @@ def myDB(uid, username, rid, email):
     # print(row_count)
 
     if (row_count > 0):
+        connect.commit()
         # connect.commit()
         print('##나의 정보를 수정합니다##')
         sql = "UPDATE USER SET USERNAME=%s, ID=%s, EMAIL=%s WHERE ID=%s"
