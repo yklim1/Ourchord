@@ -3,7 +3,7 @@
 > (ver. 2020 Capstone Design)
 # Main Function
 > Provide PDF sheet music file to converted MIDI file <br>
-> Provide MIDI file of the user wanrt chord <br>
+> Provide MIDI file of the user want chord <br>
 # Role
 > 임영규 : Algorithm&OpenCV&Module Integration <br>
 > 김민지 : Server Environment Design <br>
