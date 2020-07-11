@@ -1,0 +1,4 @@
+0 note4_up
+1 note4_down
+2 note8_up
+3 note8_down

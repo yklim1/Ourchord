@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="40dp"
+            android:textSize="30dp"
+            android:fontFamily="@font/gmarketbold"
+            android:text="비밀번호 찾기" />
+        <EditText
+            android:id="@+id/id_input"
+            android:layout_width="800px"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarketmedium"
+            android:hint="ID를 입력해주세요."
+            android:inputType="text" />
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="800px"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarketmedium"
+            android:hint="E-MAIL을 입력해주세요."
+            android:inputType="text"/>
+        <Button
+            android:id="@+id/find_pw_btn"
+            android:layout_width="700px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/gmarketmedium"
+            android:textColor="#ffffff"
+            android:background="@drawable/blue_btn"
+            android:text="PW 찾기" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#949596"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="회원가입 시 입력한 이름과 이메일을 입력해주세요."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#949596"
+                android:layout_gravity="center"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="입력하신 이메일로 비밀번호가 전송됩니다."/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
