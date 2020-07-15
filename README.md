@@ -8,7 +8,7 @@
 > 임영규 : Algorithm&OpenCV&Module Integration <br>
 > 김민지 : Server Environment Design <br>
 > 문지수 : Application&DeepLearning <br>
-> [NOTION](https://www.notion.so/36682c25195547e881f54182bb179bdc?v=4093e2a873ea4b5e9bdb94b3e86cd226)
+> [일정관리-NOTION](https://www.notion.so/36682c25195547e881f54182bb179bdc?v=4093e2a873ea4b5e9bdb94b3e86cd226)
 # Detail
 > Library : Tensorflow, OpenCV   
 > Tool : Pychram CE, Visual Studio Code, Android Studio, MySQLWorkbench   
