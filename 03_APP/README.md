@@ -1,5 +1,5 @@
 ## APP EXPLAIN   
-> JAVA (RES)   
+JAVA (RES)   
 > * loading.java (activity_loading.xml)
 > * login.java (activity_login.xml)
 > * find_id.java (activity_find_id.xml)
@@ -17,7 +17,7 @@
 > * faq.java (activity_faq.xml)
 > * my.java (activity_my.xml)   
 
-> APP -> SERVER
+APP -> SERVER
 > * LOGIN (login-id-pwd)
 > * ID CHECK (idcheck-id)
 > * REGISTER (register-name-id-pwd-auth)
