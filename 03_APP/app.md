@@ -1,0 +1,33 @@
+## APP EXPLAIN   
+> JAVA (RES)   
+> * loading.java (activity_loading.xml)
+> * login.java (activity_login.xml)
+> * find_id.java (activity_find_id.xml)
+> * find_pw.java (activity_find_pw.xml)
+> * register.java (activity_register.xml)
+> * register_complete.java (activity_register_complete.java)
+> * MainActivity.java (activity_main.xml)
+> * folder.java (fragment_folder.xml)
+> * upload_folder.java (fragment_upload_folder.xml)
+> * midiuplode_folder.java (fragment_midiupload_folder.xml)
+> * tune.java (fragment_tune.xml)
+> * conversion.java (fragment_conversion.xml)
+> * setting.java (fragment_setting.xml)
+> * notice.java (activity_notice.xml)
+> * faq.java (activity_faq.xml)
+> * my.java (activity_my.xml)   
+
+> APP -> SERVER
+> * LOGIN (login-id-pwd)
+> * ID CHECK (idcheck-id)
+> * REGISTER (register-name-id-pwd-auth)
+> * FIND ID (findid-name-email)
+> * FIND PASSWORD (findpw-id-email)
+> * UPLOAD FILE (uploadfolder-filename)
+> * CHORD CONVERSION (conversion-basechord-changechord-filename)
+
+
+
+
+
+
