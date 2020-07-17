@@ -1,4 +1,5 @@
 ## ALGORITHM EXPLAIN   
+* [DEMO CHORD](https://github.com/yklim1/Ourchord/edit/master/01_ALGORITHM/)
 * To be changed to Thread     
 
 Note Recognition(OPENCV)   
