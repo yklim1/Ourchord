@@ -5,9 +5,7 @@
 # Music Key    
 > Key is fundamental organization that arranges and orders sound   
 > Key is divided major and minor    
-> C, C#, D, D#, E, F, F#, G, G#, A, A#, B, B#   
-|:Key:|:Scale:|   
-|:C:|:C D E F G A B:|
+> C, C#(Db), D, D#(Eb), E(Fb), F, F#(Gb), G, G#(Ab), A, A#(Bb), B(Cb)   
 
 # Music Key Signature      
 > Collection of temporary table(#, b) that occurs in the composition of the scale    

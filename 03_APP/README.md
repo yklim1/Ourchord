@@ -1,4 +1,4 @@
-## APP EXPLAIN   
+# APP EXPLAIN   
 JAVA (RES)   
 > loading.java (activity_loading.xml)   
 > login.java (activity_login.xml)  

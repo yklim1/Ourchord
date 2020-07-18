@@ -1,4 +1,4 @@
-## ALGORITHM EXPLAIN   
+# ALGORITHM EXPLAIN   
 * [DEMO CHORD](https://github.com/yklim1/Ourchord/blob/master/01_ALGORITHM/demo_0712.py)
 * To be changed to Thread     
 
