@@ -6,7 +6,7 @@
 > Key is fundamental organization that arranges and orders sound   
 > Key is divided major and minor    
 > C, C#, D, D#, E, F, F#, G, G#, A, A#, B, B#   
-|:Key:|:Scale:|
+|:Key:|:Scale:|   
 |:C:|:C D E F G A B:|
 
 # Music Key Signature      
