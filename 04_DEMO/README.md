@@ -1,10 +1,13 @@
-## DEMO EXPLAIN   
-* [DEMO VIDEO](https://github.com/yklim1/Ourchord/blob/master/04_DEMO/Demo.mp4)  
-* Add to users can see number of notes   
+# DEMO EXPLAIN   
+> [DEMO VIDEO](https://github.com/yklim1/Ourchord/blob/master/04_DEMO/Demo.mp4)  
+> Add to users can see number of notes   
 
 # Music Key?   
-> Key is fundamental organization than arranges and orders sound   
+> Key is fundamental organization that arranges and orders sound   
 > Key is divided major and minor    
+> C, C#, D, D#, E, F, F#, G, G#, A, A#, B, B#
+> |:Key:|:Scale:|
+|:C:|:C D E F G A B:|
 
 # Music Key Signature?   
 > Collection of temporary table(#, b) that occurs in the composition of the scale    
