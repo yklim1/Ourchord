@@ -1,4 +1,5 @@
 ## ALGORITHM EXPLAIN   
+* [DEMO CHORD](https://github.com/yklim1/Ourchord/blob/master/01_ALGORITHM/demo_0712.py)
 * To be changed to Thread     
 
 Note Recognition(OPENCV)   
@@ -15,7 +16,7 @@ Note Recognition(OPENCV)
 >> change_list (list of change chord notes)
 
 Tempo Recognition(DEEP LEARNING)
-> tempo_classification (get the tempo)   
+> tempo_classification   
 >> possible to classification half, quarter, eight, sixteenth note    
 >> classification according to the direction of the note's tail   
 
