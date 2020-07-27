@@ -1,6 +1,6 @@
 # DEMO EXPLAIN   
-> [DEMO VIDEO](https://github.com/yklim1/Ourchord/blob/master/04_DEMO/Demo.mp4)  
-> Add to users can see number of notes   
+* [DEMO VIDEO](https://github.com/yklim1/Ourchord/blob/master/04_DEMO/Demo.mp4)  
+* Add to users can see number of notes   
 
 # Music Key    
 > Key is fundamental organization that arranges and orders sound   
