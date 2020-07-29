@@ -17,11 +17,11 @@ PORT = 9300  # 9330
 # /home/ec2-user/Ourchord/USER 에서 사용자 이름(id)만 구분하고 mid랑 pdf같이 저장하기
 SPDF_DIR = '/home/ec2-user/Ourchord/USER/'
 
-connect = pymysql.connect(host="ourchord.cwowchilkfpb.ap-northeast-2.rds.amazonaws.com",
+connect = pymysql.connect(host="",
                           port=3306,
                           user="ourchord",
-                          password="IjDwDjKtU1-A",
-                          db="OURCHORD")
+                          password="",
+                          db="")
 # aws rds 에서 cursor(쿼리문에 의해서 반환되는 결과값을 저장하는 메모리 공간)얻기
 # cursor = connect.cursor(pymysql.cursors.DictCursor)
 cursor = connect.cursor()
