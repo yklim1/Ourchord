@@ -1,5 +1,8 @@
 # demo 서버 통합
-# eeexplanin.py 
+# class : explain.py
+# eexplain.py :+ 변수 class
+# eeexplanin.py
+
 #  수정 예정
 
 import pymysql
