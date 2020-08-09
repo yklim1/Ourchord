@@ -1,5 +1,6 @@
 # demo 서버 통합
 # eeexplanin.py 
+#  수정 예정
 
 import pymysql
 import socketserver
