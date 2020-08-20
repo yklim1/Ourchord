@@ -1,9 +1,4 @@
-# demo 서버 통합
-# class : explain.py
-# eexplain.py :+ 변수 class
-# eeexplanin.py
-
-#  수정 예정
+# final demo 그대로
 
 import pymysql
 import socketserver
@@ -15,14 +10,15 @@ from os.path import isfile, join  # SPDF_DIR 디렉토리 내 파일 리스트 �
 import time
 import struct
 import cob
-#import multiprocessing
-import threading
+import multiprocessing
 
 HOST = ''
 BUFSIZE = 1048576
-PORT =''
+PORT =   # 9330
 # /home/ec2-user/Ourchord/USER 에서 사용자 이름(id)만 구분하고 mid랑 pdf같이 저장하기
-SPDF_DIR = '/home/ec2-user/Ourchord/USER/'
+SPDF_DIR = ''
+global auth_tdata
+global impdata  # 로그인 성공한 id값 저장
 
 connect = pymysql.connect(host="",
                           port=,
@@ -34,42 +30,18 @@ connect = pymysql.connect(host="",
 cursor = connect.cursor()
 
 
+
 class MyTcpHandler(socketserver.BaseRequestHandler):
+    def __init__(self, id, pwd):
+        self.id = id
+        self.pwd = pwd
     def handle(self):
-        #시작시간
-        #start_time = time.time()
         print('connect')
-
-        # 변수 모음
-        # pName -> fileName
-        # auth_tdata -> authData
-        # impdata -> loginUserId
-        # id -> userId :id 함수 있음
-        class Variable:
-            # p_dir -> userDir
-            # f -> pdfContent
-            # apdir -> pdfDir
-            # pfile_name -> pdfName
-            # test -> endRev
-            # testdata  -> sendList
-            # testlen -> midiFileLen
-            # ttt -> sendMidi
-            # p_files -> allMidiList
-            allUserDir, userDir = None, None  # id별 디렉토리 경로
-            pdfDir, pdfName, pdfContent, allPdfList = None, None, None, None  # 경로
-            endRev = None
-            sendList, midiFIleLen, sendMidi, allMidiList = None, None, None, None
-
         # ---------------------화면 바뀔때마다 MyTcpHandler실행---------------------
         # 화면 구분할 배열 선언: android에서 string으로 보내는걸 배열로 받아야함
-        ##############1.화면 구분을 위함##############
-
-        # pool
-        #global pool # join, close
-        #pool = multiprocessing.Pool(processes=2)
-
+        ##############1.화면 구분##############
         checkpoint = "+"
-        displayName = ""  # alldis -> displayName
+        alldis = ""
         while (1):
             # print("시작")
             display = self.request.recv(4096)
@@ -78,285 +50,374 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
                 print("display값: ", display)
                 display = display.decode()
                 if (display.find(checkpoint) == -1):
-                    displayName = displayName + display
+                    alldis = alldis + display
                 else:
-                    Variable.endRev = display.split(checkpoint)  # test -> Variable.endRev
-                    displayName = displayName + Variable.endRev[0]
+                    test = display.split(checkpoint)
+                    alldis = alldis + test[0]
                     break
+            # 튜닝음 재생할때 display 값: b'' 무한대출력
 
-        ##############2.displayName 배열에 저장##############
-        print("배열 저장 전 displayName: ", displayName)
-        tdata = displayName.split("-")  # 문자열 '스페이스'로 구분하여 리스트에 저장
-        print("배열 저장 후 displayName: ", tdata)  # t(otal)data
+        ##############2.alldis값 배열에 저장##############
+        print("배열 저장 전 alldis: ", alldis)
+        tdata = alldis.split("-")  # 문자열 '스페이스'로 구분하여 리스트에 저장
+        print("배열 저장 후 alldis: ", tdata)  # t(otal)data
 
-        global loginUserId  # 로그인 성공한 id값 저장(impdata -> loginUserId)
+        # global impdata  # 로그인 성공한 id값 저장
 
-        #pool.map()  # dict_math_display매핑 함수, 전달값
-        ##############3.로그인 화면(Login)##############
-        class Login:
-            def login(self):
-                print("##로그인 정보를 확인 합니다.##\n\n")
-                loginUserId = tdata[1]  # loginUserId에 id값 저장
-                loginDB(tdata[1], tdata[2], self)
-                # print("로그인 화면 수행은 총 %s 초 걸렸습니다." % (time.time() - start_time))
+        # ---------------------화면별 받은 정보 저장 이후 ---------------------
+        ##############3.로그인 화면(login)##############
+        # ex) "login, id, pwd"
+        # !!!!!id 정보는 계속 가지고 가야함 -> 사용자 정보 수정/ pdf / mid 파일 제공 시 필요!!!!!
+        if (tdata[0] == 'login'):
+            print("##로그인 정보를 확인 합니다.##\n\n")
+            impdata = tdata[1]  # impdata에 id값 저장
+            loginDB(tdata[1], tdata[2], self)
 
-        ##############4.회원가입 화면(Auth)##############
-        class Auth:
-            def id_check(self):  # 4-1.회원가입:id 중복확인(checkid)
-                print("##id 중복확인을 시작합니다.##\n\n")
-                checkidDB(tdata[1], self)
-                # print("id 중복확인 수행은 총 %s 초 걸렸습니다." % (time.time() - start_time))
+        ##############4-1.회원가입:id 중복확인(checkid)##############
+        # ex) "id_check, id"
+        if (tdata[0] == 'id_check'):
+            print("##id 중복확인을 시작합니다.##\n\n")
+            checkidDB(tdata[1], self)
+            auth_tdata = tdata
 
-            def Auth(self):  # 4-2. 회원가입:인증코드 버튼(Auth)
-                print("##인증코드 버튼에서 회원가입 내용 저장을 시작합니다.##\n\n")
-                # '회원가입 완료'할때까지 DB에 접근하지 않기 위함
-                global authData  # auth_tdata -> authData(회원가입 시, 입력한 정보 임시 저장 배열)
-                authData = tdata
+        ##############4-4.회원가입 내용 저장 화면(register)##############
+        # ex) "register"
+        if (tdata[0] == 'register'):
+            print("##회원가입 내용 저장을 시작합니다.##\n\n")
+            registerDB(auth_tdata[1], auth_tdata[2], auth_tdata[3], auth_tdata[4], auth_tdata[5])
 
-            def checkAuth(self):  # 4-3. 회원가입:확인 버튼(checkAuth)
-                print("##인증코드 확인을 시작합니다.##\n\n")
-                # checkAuthDB(authData[2], tdata[1])
-                # 발급받은 인증번호(Auth 함수 실행시 authData 리스트에 저장) == 사용자가 입력한 인증번호
-                if (authData[5] == tdata[1]):
-                    print(loginUserId, "인증 성공")
-                    self.request.send(b's')
-                    # print("인증확인은 총 %s 초 걸렸습니다." % (time.time() - start_time))
-                else:
-                    print(loginUserId, "인증 실패")
-                    self.request.send(b'f')
-                    # print("인증확인은 총 %s 초 걸렸습니다." % (time.time() - start_time))
+        ##############5.서버로 pdf 파일 저장(upload_folder)##############
+        if (tdata[0] == 'upload_folder'):
+            print("##앱에 저장 된 pdf 파일을 서버에 저장합니다.##\n\n")
 
-            def register(self):  # 4-4.회원가입 내용 저장 화면(register)
-                print("##회원가입 내용 저장을 시작합니다.##\n\n")
-                registerDB(authData[1], authData[2], authData[3], authData[4], authData[5])
-                # print("회원가입 저장은 총 %s 초 걸렸습니다." % (time.time() - start_time))
+            # time.sleep(1)
+            print("test 시작")
+            p_dir = "/home/ec2-user/Ourchord/USER/zjisuoo/"  # 미디 생성할 pdf 경로 저장
+            files = [f for f in listdir(p_dir) if isfile(join(p_dir, f))]
+            print("모든 PDF 파일리스트:", files)
 
-        class Folder:
-            def upload_folder(self):  # 5.서버로 pdf 파일 저장(upload_folder)
-                print("##앱에 저장 된 pdf 파일을 서버에 저장합니다.##\n\n")
+            # pdf파일 확장자 한번 더 files에서 뽑아내고 for문으로 전송
+            files = [i for i in files if i.find('.pdf') != -1]
+            print("모든 PDF 파일리스트:", files)
+            p_files = "-".join(files)
 
-                # time.sleep(1)
-                print("test 시작")
-                # p_dir -> userDir
-                # Variable.userDir = "/home/ec2-user/Ourchord/USER/"+impdata+"/"  # 미디 생성할 pdf 경로 저장
-                Variable.userDir = "/home/ec2-user/Ourchord/USER/zjisuoo/"  # 미디 생성할 pdf 경로 저장
-                files = [f for f in listdir(Variable.userDir) if isfile(join(Variable.userDir, f))]
-                print("모든 PDF 파일리스트:", files)
+            testlen = len(p_files)
+            print("pdf 파일 리스트 길이", testlen)
 
-                # pdf파일 확장자 한번 더 files에서 뽑아내고 for문으로 전송
-                files = [i for i in files if i.find('.pdf') != -1]
-                print("모든 PDF 파일리스트:", files)
-                Variable.allMidiList = "-".join(files)  # p_files -> Variable.allMidiList
+            ttt = struct.pack('b', testlen)
+            # testnum = testlen.encode()
+            self.request.send(ttt)
 
-                Variable.midiFileLen = len(Variable.allMidiList)  # testlen -> Variable.midiFileLen
-                print("pdf 파일 리스트 길이", Variable.midiFileLen)
+            # time.sleep(1)
 
-                Variable.sendMidi = struct.pack('b', Variable.midiFileLen)
-                # testnum = testlen.encode()
-                self.request.send(Variable.sendMidi)
+            testdata = p_files.encode()
+            self.request.send(testdata)
+            print("리스트 보내기 종료")
 
-                # time.sleep(1)
+            # 파일 이름 받기 --> t0해서 이름구분
 
-                Variable.sendList = Variable.allMidiList.encode()  # testdata  -> Variable.sendList
-                self.request.send(Variable.sendList)
-                print("리스트 보내기 종료")
-
-            def pName(self):
-                # pName -> fileName
-                fileName = ""  # 기존 파일 이름: pfile_name = tdata[1] -> pName
-                while (1):
-                    # print("line148 시작")
-                    display = self.request.recv(4096)
-                    # print("display 값 :".display)
-                    if (display != 0):
-                        print(display)
-                        display = display.decode()
-                        if (display.find(checkpoint) == -1):
-                            fileName = fileName + display
-                        else:
-                            Variable.endRev = display.split(checkpoint)
-                            fileName = fileName + Variable.endRev[0]
-                            break
+        if (tdata[0] == 'pName'):
+            pName = ""  # 기존 파일 이름: pfile_name = tdata[1] -> pName
+            while (1):
+                # print("line148 시작")
+                display = self.request.recv(4096)
+                # print("display 값 :".display)
+                if (display != 0):
+                    print(display)
+                    display = display.decode()
+                    if (display.find(checkpoint) == -1):
+                        pName = pName + display
                     else:
-                        print("나감")
+                        test = display.split(checkpoint)
+                        pName = pName + test[0]
                         break
-                print(fileName)
-                # fileName = tdata[1]
+                else:
+                    print("나감")
+                    break
+            print(pName)
+            # pName = tdata[1]
 
-                # pfile_name = self.request.recv(2048)  # pdf 이름 저장
-                # global pfile_name
-                # pfile_name = tdata[1]  # pdf 이름 저장
-                Variable.pdfName = fileName
+            # pfile_name = self.request.recv(2048)  # pdf 이름 저장
+            global pfile_name
+            # pfile_name = tdata[1]  # pdf 이름 저장
+            pfile_name = pName
+            # pfile_size = int.from_bytes(self.request.recv(4096), byteorder='big')
 
-                print("\n(다운로드 시작)...")
+            # if pfile_size == 0:
+            # print("안드에'" + pfile_name + "' 없음")
+            # self.request.send(b'f')
 
-                global pdir
-                # pdir = SPDF_DIR + impdata + "/"
-                pdir = SPDF_DIR + "zjisuoo/"
-                # pdf 폴더까지의 경로
-                Variable.pdfDir = pdir + Variable.pdfName  # apdir -> pdfDir
+            # print("file name : " + pfile_name)
+            # print("size: %d" % pfile_size)
+            print("\n(다운로드 시작)...")
+            # self.request.recv(bytes[255])
+
+            # nowdown_size = 0  # 다운로드 된 size
+
+            # pfile_name(ex)12.pdf) 저장할 디렉토리 경로 생성 -> 디렉토리 내 모든 pdf 파일을 불러올 때 사용하기 위함
+            global pdir
+            # pdir = SPDF_DIR + impdata + "/"
+            pdir = SPDF_DIR + "zjisuoo/"
+            # pdf 폴더까지의 경로
+            apdir = pdir + pfile_name
+            try:
+                # 디렉토리 없으면 생성
+                print("디렉토리 진행 시작 : ")
+                if not os.path.exists(pdir):  # 디렉토리 생성 o
+                    print("디렉토리 생성 후 해당 디렉토리 아래 PDF 파일을 저장합니다.")
+                    os.makedirs(pdir)
+                    # sys.stdout = open(apdir, 'w')
+                    f = open(apdir, 'wb')
+                    print('------여기부터 확인 해야댐------')
+                    # if nowdown_size < pfile_size:
+                    # resp = self.request.recv(min(BUFSIZE, pfile_size - nowdown_size))
+                    # nowdown_size += len(resp)
+                    while (1):
+                        resp = self.request.recv(4096)
+                        if (resp != 0):
+                            # f.write(resp)
+                            print("쓰는중")
+                            # print(resp)
+                            a = len(resp)
+                            if (resp[a - 1] == 43):
+                                print("if종료")
+                                aa = resp[0:a - 1]
+                                f.write(aa)
+                                f.close()
+                                print("종료")
+                                break
+                            else:
+                                print("쓰기")
+                                f.write(resp)
+                        else:
+                            print("종료")
+                            f.close()
+                            break
+
+                    sys.stdout.flush()
+
+                # DB 에도 impdata에 해당하는 id를 통해서 파일 경로(pdf: dir) 저장해
+                # USER_SCORE_PDF 테이블에 저장 (PDF_ID(ID), PDF_NAME, PDF_PATH)
+                # upload_folderDB(impdata, pfile_name, apdir)
+
+                if os.path.isdir(pdir):  # 디렉토리 생성x
+                    print("기존에 있는 디렉토리 이므로 해당 디렉토리 아래 PDF 파일을 저장합니다.")
+                    f = open(apdir, 'wb')
+                    while (1):
+                        resp = self.request.recv(4096)
+                        if (resp != 0):
+                            # f.write(resp)
+                            print("쓰는중")
+                            # print(resp)
+                            a = len(resp)
+                            if (resp[a - 1] == 43):  # '+'
+                                print("if종료")
+                                aa = resp[0:a - 1]
+                                f.write(aa)
+                                f.close()
+                                print("종료")
+                                break
+                            else:
+                                print("쓰기")
+                                f.write(resp)
+                        else:
+                            print("종료")
+                            f.close()
+                            break
+            except OSError:
+                print('Error: create directory ' + apdir)
+
+        ############################6. 조 변환############################
+        # ex) 'conversion-기존 조-변환 조-pdf 이름'
+        if (tdata[0] == 'conversion'):
+            # /home/ec2-user/Ourchord/modify.py는 코드 실행 후, 서버에 mid저장까지
+            print("##조 변환과 미디 생성 알고리즘이 동작됩니다.##\n\n")
+
+            # mid 앱으로 보내기
+            p = SPDF_DIR + "zjisuoo/" + tdata[3]
+            # tdata[3]은 pdf 이름 -> rpfile_name에 .pdf빼고 저장
+
+            rpfile_name = ""
+            # for i in range(0, len(pfile_name) - 4, 1):
+            #    rpfile_name = rpfile_name + "".join(pfile_name[i])
+            pdfname = tdata[3].split(".pdf")
+
+            print("PDF 이름만 뽑았습니다.: ", pdfname[0])
+
+            base_p = SPDF_DIR + "zjisuoo/" + "Base" + tdata[1] + "_" + pdfname[0] + ".mid"
+            print("변환전 midi 경로:", base_p)
+
+            change_p = SPDF_DIR + "zjisuoo/" + "Change" + tdata[2] + "_" + pdfname[0] + ".mid"
+            print("변환된 midi 경로:", change_p)
+
+            # cob 로 전송 -> pdf경로를 보냄
+            cob.midiMain(p, tdata[1], tdata[2])
+
+            print("Base MIDI 파일을 앱으로 보냅니다.")
+
+
+        ##############7.서버에서 생성된 mid 파일 리스트와 파일을 앱으로 전송(midiupload_folder)##############
+        # SPDF_DIR <-> pdir(/user id 까지) 로 바꾸기
+        if (tdata[0] == 'midiupload_folder'):
+            print("##생성된 mid 파일을 앱으로 전송합니다.##\n\n")
+
+            # time.sleep(1)
+            print("test 시작")
+            p_dir = "/home/ec2-user/Ourchord/USER/zjisuoo/"  # 미디 생성할 pdf 경로 저장
+            files = [f for f in listdir(p_dir) if isfile(join(p_dir, f))]
+            print("모든 파일리스트:", files)
+
+            # mid파일 확장자 한번 더 files에서 뽑아내고 for문으로 전송
+            files = [i for i in files if i.find('.mid') != -1]
+            print("모든 MIDI 파일리스트:", files)
+            p_files = "-".join(files)
+
+            testlen = len(p_files)
+            print("mid 파일 리스트 길이", testlen)
+
+            ttt = struct.pack('b', testlen)
+            # testnum = testlen.encode()
+            self.request.send(ttt)
+
+            # time.sleep(1)
+
+            testdata = p_files.encode()
+            self.request.send(testdata)
+            print("리스트 보내기 종료")
+
+            # midi안드로 보내기
+            '''while True:
                 try:
-                    # 디렉토리 없으면 생성
-                    print("디렉토리 진행 시작 : ")
-                    if not os.path.exists(pdir):  # 디렉토리 생성 o
-                        print("디렉토리 생성 후 해당 디렉토리 아래 PDF 파일을 저장합니다.")
-                        os.makedirs(pdir)
-                        # sys.stdout = open(Variable.pdfDir, 'w')
-                        Variable.pdfContent = open(Variable.pdfDir, 'wb')  # f -> Variable.pdfContent
-                        print('------여기부터 확인 해야댐------')
+                    # 디렉토리 내 파일 유무 확인
+                    print("try실행")
+                    mfile_list = glob.glob(pdir) # pdir = SPDF_DIR + impdata + "/"
+                    # conn = self.request()
+                    print("file 읽기 종료")
 
-                        while (1):
-                            resp = self.request.recv(4096)
-                            if (resp != 0):
-                                # f.write(resp)
-                                print("쓰는중")
-                                # print(resp)
-                                a = len(resp)
-                                if (resp[a - 1] == 43):
-                                    print("if종료")
-                                    aa = resp[0:a - 1]
-                                    Variable.pdfContent.write(aa)
-                                    Variable.pdfContent.close()
-                                    print("종료")
-                                    break
-                                else:
-                                    print("쓰기")
-                                    Variable.pdfContent.write(resp)
+                    if len(mfile_list) != 1:
+                        print(pdir + "파일이 없습니다.")
+                        self.request.sendall(bytes[0])
+                    else:
+                        # SPDF_DIR 디렉토리 내 파일 리스트 리스트로 저장
+                        # SPDF_DIR -> pdir(SPDF_DIR + impdata)로 바꾸기
+                        files = [f for f in listdir(pdir) if isfile(join(pdir, f))]
+                        print("모든 MIDI 파일리스트:", files)
+
+                        ########### 미디 리스트 전송(기존/변경 미디 모두 전송)
+                        if (len(tdata) == 1):
+                            files = [i for i in files if i.find('.mid') != -1]
+                            print("변환 전 MIDI 파일리스트:", files)
+                            file = "-".join(files)
+                            # print("앱으로 보낼 정보 입니다: ", file)
+                            # self.request.sendall(file.encode())  # 파일 리스트 안드로이드로 보내기
+                            # print("조건에 부합하는 Change MIDI 파일리스트 전송 완료")
+
+                            testlen = len(file)
+                            print("pdf 파일 리스트 길이", testlen)
+
+                            ttt = struct.pack('b', testlen)
+                            # testnum = testlen.encode()
+                            self.request.send(ttt)
+
+                            time.sleep(1)
+
+                            testdata = file.encode()
+                            self.request.send(testdata)
+                            print("리스트 보내기 종료")
+                            #return file
+
+                        ########### 지정 미디 파일 전송
+                        else:
+                            print("전송할 파일" + pdir)
+                            print("##전송할 데이터##")
+                            f = open(pdir, 'rb')
+                            s = f.read()
+                            print(s)
+
+                            file_list = glob.glob(pdir)  # glob모듈의 glob()
+                            if len(file_list) != 1:
+                                print(pdir + " 파일없음")
+                                self.request.sendall(bytes([0]))
+                                continue
                             else:
-                                print("종료")
-                                Variable.pdfContent.close()
+                                file_size = os.path.getsize(pdir)
+                                print("file size: %d bytes" % file_size)
+
+                                # length=8:데이터길이
+                                # byteorder="big": 바이트 순서 빅엔디안
+                                self.request.sendall((file_size).to_bytes(length=8, byteorder="big"))
+
+                            client_status = 'bytes([255])'
+                            if client_status == 'bytes([255])':
+                                print(pdir + " 전송시작")
+                                with open(pdir, "rb") as f:
+                                    self.request.sendfile(f)
+                                self.request.sendall(bytes([255]))
+                                print(pdir + " 전송완료")
+                                print("성공했으니 바로 종료합니다.")
                                 break
 
-                        sys.stdout.flush()
-
-                    if os.path.isdir(pdir):  # 디렉토리 생성x
-                        print("기존에 있는 디렉토리 이므로 해당 디렉토리 아래 PDF 파일을 저장합니다.")
-                        Variable.pdfContent = open(Variable.pdfDir, 'wb')
-                        while (1):
-                            resp = self.request.recv(4096)
-                            if (resp != 0):
-                                # f.write(resp)
-                                print("쓰는중")
-                                # print(resp)
-                                a = len(resp)
-                                if (resp[a - 1] == 43):  # '+'
-                                    print("if종료")
-                                    aa = resp[0:a - 1]
-                                    Variable.pdfContent.write(aa)
-                                    Variable.pdfContent.close()
-                                    print("종료")
-                                    break
-                                else:
-                                    print("쓰기")
-                                    Variable.pdfContent.write(resp)
-                            else:
-                                print("종료")
-                                Variable.pdfContent.close()
-                                break
+                except ConnectionError:
+                    print("ConnectionError 발생")
+                    break
                 except OSError:
-                    print('Error: create directory ' + Variable.pdfDir)
+                    print("OSError 발생")
+                    break
+                except:
+                    print("bad-requestError 발생")
+                    break
+                finally:
+                    self.request.close()'''
 
-            def conversion(self):  # 6. 조 변환
-                # /home/ec2-user/Ourchord/modify.py는 코드 실행 후, 서버에 mid저장까지
-                print("##조 변환과 미디 생성 알고리즘이 동작됩니다.##\n\n")
+            # # 현재 사용중인 사용자의 mid폴더(pdir)에 접근하여 모든 mid파일 보내기
+            # mfile_list = glob.glob(pdir)
+            # if len(mfile_list) != 1:
+            #     print(pdir + "파일이 없습니다.")
+            # else:
+            #     # 방1) DB 접근 안하고 디렉토리 경로로 모든 MIDI 파일 전송
+            #     file_list = glob.glob(pdir + '*.mid')
+            #     i = 0
+            #     for i in range(len(file_list)):
+            #         print(i + 1, "번째", file_list[i])
+            #         # rb(read-binary), rt(read-text), wb, wt
+            #         sf = open(file_list[i], 'rb')
+            #         data = sf.read()  # mid 파일
+            #         print("전송 전 데이터: ", data)
+            #         # 전송할 파일 size
+            #         file_size = os.path.getsize(pdir)
+            #         print("file_size: %d bytes" % file_size)
+            #
+            #         print(file_list[i] + " 전송시작")
+            #         self.request.sendall(data)
+            #         print(file_list[i] + " 전송완료")
 
-                # mid 앱으로 보내기
-                p = SPDF_DIR + "zjisuoo/" + tdata[3]
+        ##############8.ID 찾기 화면(find_id)##############
+        # ex) "find_id, username, email"
+        # 앱에서 이메일 보내는데 그 이메일에 담긴 id 내용은 서버에서 보내줘야하는거지
+        if (tdata[0] == 'find_id'):
+            print("##id를 찾습니다.##\n\n")
 
-                pdfname = tdata[3].split(".pdf")
+            find_idDB(tdata[1], tdata[2], self)
 
-                print("PDF 이름만 뽑았습니다.: ", pdfname[0])
+        ##############9.PWD 찾기 화면(find_pw)##############
+        # ex) "find_pw, id, email"
+        if (tdata[0] == 'find_pwd'):
+            print("##pwd를 찾습니다.##\n\n")
 
-                # base_p = SPDF_DIR + impdata +"/" + "Base" + tdata[1] + "_" + pdfname[0] + ".mid"
-                base_p = SPDF_DIR + "zjisuoo/" + "Base" + tdata[1] + "_" + pdfname[0] + ".mid"
-                print("변환전 midi 경로:", base_p)
+            find_pwdDB()(tdata[1], tdata[2], self)
 
-                # base_p = SPDF_DIR + impdata +"/" + "Change" + tdata[2] + "_" + pdfname[0] + ".mid"
-                change_p = SPDF_DIR + "zjisuoo/" + "Change" + tdata[2] + "_" + pdfname[0] + ".mid"
-                print("변환된 midi 경로:", change_p)
+        ##############10.개인정보 수정화면(my)##############
+        # ex) "my, username, id, email"
+        if (tdata[0] == 'my'):
+            print("##개인정보를 수정합니다.##\n\n")
+            # 누구의 정보(impdata -> 현재 사용중인 사용자의 id)를
+            # 어떻게 수정할지(tdata -> username, id, email)
+            print(impdata)
+            myDB(impdata, tdata[1], tdata[2], tdata[3], self)
 
-                # cob 로 전송 -> pdf경로를 보냄
-                cob.midiMain(p, tdata[1], tdata[2])
-
-                print("Base MIDI 파일을 앱으로 보냅니다.")
-
-            def midiupload_folder(self):  # 7.서버에서 생성된 mid 파일 리스트와 파일을 앱으로 전송(midiupload_folder)
-                print("##생성된 mid 파일을 앱으로 전송합니다.##\n\n")
-
-                # time.sleep(1)
-                print("test 시작")
-                Variable.userDir = "/home/ec2-user/Ourchord/USER/zjisuoo/"  # 미디 생성할 pdf 경로 저장
-                files = [f for f in listdir(Variable.userDir) if isfile(join(Variable.userDir, f))]
-                print("모든 파일리스트:", files)
-
-                # mid파일 확장자 한번 더 files에서 뽑아내고 for문으로 전송
-                files = [i for i in files if i.find('.mid') != -1]
-                print("모든 MIDI 파일리스트:", files)
-                Variable.allMidiList = "-".join(files)
-
-                Variable.midiFileLen = len(Variable.allMidiList)
-                print("mid 파일 리스트 길이", Variable.midiFileLen)
-
-                Variable.sendMidi = struct.pack('b', Variable.midiFileLen)  # ttt -> Variable.sendMidi
-                # testnum = testlen.encode()
-                self.request.send(Variable.sendMidi)
-
-                # time.sleep(1)
-
-                Variable.sendList = Variable.allMidiList.encode()
-                self.request.send(Variable.sendList)
-                print("리스트 보내기 종료")
-
-        class Find:
-            def find_id(self):  # 8.ID 찾기 화면(find_id)
-                print("##id를 찾습니다.##\n\n")
-                find_idDB(tdata[1], tdata[2], self)
-
-            def find_pwd(self):  # 9.PWD 찾기 화면(find_pw)
-                print("##pwd를 찾습니다.##\n\n")
-                find_pwdDB()(tdata[1], tdata[2], self)
-
-            def my(self):  # 10.개인정보 수정화면(my)
-                print("## " + loginUserId + " 의 개인정보를 수정합니다.##\n\n")
-                myDB(loginUserId, tdata[1], tdata[2], tdata[3], self)
-
-        login = Login()
-        auth = Auth()
-        folder = Folder()
-        find = Find()
-
-        dis_login = threading.Thread(target=login.login)
-        dis_id_check = threading.Thread(target=auth.id_check)
-        dis_Auth = threading.Thread(target= auth.Auth)
-        dis_chechAuth = threading.Thread(target=auth.checkAuth)
-        dis_register = threading.Thread(target=auth.register)
-        dis_upload_folder = threading.Thread(target=folder.upload_folder)
-        dis_pName = threading.Thread(target=folder.pName)
-        dis_conversion = threading.Thread(target=folder.conversion)
-        dis_midiupload_folder = threading.Thread(target=folder.midiupload_folder)
-        dis_find_id= threading.Thread(target=find.find_id)
-        dis_find_pwd= threading.Thread(target=find.find_pwd)
-        dis_my= threading.Thread(target=find.my)
-
-        dict_math_display = { # 'NoneType' object is not callable--check하기
-            'login': dis_login, # 'login' : login.login,
-            'id_check': dis_id_check.start(), # 'id_check': auth.id_check,
-            'Auth': dis_Auth.start(), # 'Auth': auth.Auth,
-            'checkAuth': dis_chechAuth.start(), # 'checkAuth': auth.checkAuth,
-            'register': dis_register.start(), # 'register': auth.register,
-            'upload_folder': dis_upload_folder.start(), # 'upload_folder': folder.upload_folder,
-            'pName': dis_pName.start(), # 'pName': folder.pName,
-            'conversion': dis_conversion.start(), # 'conversion': folder.conversion,
-            'midiupload_folder': dis_midiupload_folder.start(), # 'midiupload_folder': folder.midiupload_folder,
-            'find_id': dis_find_id.start(), # 'find_id': find.find_id,
-            'find_pwd': dis_find_pwd.start(), # 'find_pwd': find.find_pwd,
-            'my': dis_my.start() # 'my': find.my
-        }
-
-        dict_math_display[tdata[0]]()  # 화면별 함수
-
+# *모든 return값은 sql문 실행 시, (sql실행유무가 아닌)데이터가 존재 하면!*
 # -------------------------------login DB 연동-------------------------------#
-# -> sql 성공 시, id값 loginUserId 저장
+# -> sql 성공 시, id값 impdata 저장
 def loginDB(uid, pwd, self):
     print('------loginDB 연동 완료------')
 
@@ -369,7 +430,7 @@ def loginDB(uid, pwd, self):
         connect.commit()
         print('정보있음')  # 정보 있음도 sql 문을 실행하고 결과값이 있을때 출력함
         print("로그인 성공한 사용자 ID: ", uid)
-        loginUserId = uid  # 로그인이 성공하였으므로 loginUserId 변수에 저장
+        impdata = uid  # 로그인이 성공하였으므로 impdata 변수에 저장
         self.request.send(b's')
 
     else:
@@ -397,7 +458,7 @@ def checkidDB(uid, self):
 
 
 # -------------------------------register DB 연동-------------------------------#
-def registerDB(username, userId, pwd, email, auth, self):
+def registerDB(username, id, pwd, email, auth, self):
     print('------registerDB 연동 완료------')
 
     cursor.execute("SELECT * FROM USER")
@@ -405,7 +466,7 @@ def registerDB(username, userId, pwd, email, auth, self):
     print('before: ', before)
 
     sql = "INSERT INTO USER(USERNAME, ID, PWD, EMAIL, AUTH) values(%s, %s, %s, %s, %s)"
-    cursor.execute(sql, (username, userId, pwd, email, auth))
+    cursor.execute(sql, (username, id, pwd, email, auth))
 
     cursor.execute("SELECT * FROM USER")
     after = cursor.rowcount
@@ -452,7 +513,7 @@ def upload_folderDB(pdf_id, pdf_name, pdf_path, self):
 
 
 # -------------------------------conversion DB 연동-------------------------------#
-def conversionDB(loginUserId, basemidi_name, basemidi_path, conversionmidi_name, conversionmidi_path, self):
+def conversionDB(impdata, basemidi_name, basemidi_path, conversionmidi_name, conversionmidi_path, self):
     print('------conversionDB 연동 완료------')
 
     cursor.execute("SELECT * FROM USER_SCORE_MIDI")
@@ -460,19 +521,19 @@ def conversionDB(loginUserId, basemidi_name, basemidi_path, conversionmidi_name,
     print('before: ', before)
 
     sql = "SELECT EXISTS(SELECT *FROM USER_SCORE_MIDI WHERE MIDI_ID=%s AND BASEMIDI_NAME=%s AND CONVERSIONMIDI_NAME=%s)"
-    cursor.execute(sql, (loginUserId, basemidi_name, conversionmidi_name))
+    cursor.execute(sql, (impdata, basemidi_name, conversionmidi_name))
     result = cursor.fetchone()  # fetchone(): 모든 데이터를 한번에 가져옴
     row_count = result[0]
 
     if (row_count > 0):  # 중복된 데이터는 삽입하지 않을꺼(try catch)
-        print('기존에 있는 사용자: ' + loginUserId + 'MIDI 데이터 입니다.')
+        print('기존에 있는 사용자: ' + impdata + 'MIDI 데이터 입니다.')
         # self.request.send(b'f')
 
     else:
         try:
-            print('새로운 사용자: ' + loginUserId + ' MIDI 데이터를 삽입합니다.')
+            print('새로운 사용자: ' + impdata + ' MIDI 데이터를 삽입합니다.')
             sql = "INSERT INTO USER_SCORE_MIDI(MIDI_ID, BASEMIDI_NAME, BASEMIDI_PATH, CONVERSIONMIDI_NAME, CONVERSIONMIDI_PATH) values(%s, %s, %s, %s, %s)"
-            cursor.execute(sql, (loginUserId, basemidi_name, basemidi_path, conversionmidi_name, conversionmidi_path))
+            cursor.execute(sql, (impdata, basemidi_name, basemidi_path, conversionmidi_name, conversionmidi_path))
 
             cursor.execute("SELECT * FROM USER_SCORE_MIDI")
             after = cursor.rowcount
@@ -501,17 +562,17 @@ def find_idDB(username, email, self):
         sql = "SELECT ID FROM USER WHERE USERNAME=%s AND EMAIL=%s"
         cursor.execute(sql, (username, email))
         connect.commit()
-        userId = cursor.fetchall()
-        print("전처리 전: ", userId)
+        id = cursor.fetchall()
+        print("전처리 전: ", id)
 
         # 전처리를 위한 문자열 배열로 저장
-        userId = "".join(userId[0])
-        print("전처리 후: ", userId)
+        id = "".join(id[0])
+        print("전처리 후: ", id)
 
         print('ID 찾기 성공')
         # return runServer.find_id(id) # ID 정보만 보내줌
         #########################여기는 s/f가 아니라 id값 전송해야함#########################
-        self.request.send(userId)
+        self.request.send(id)
 
     else:
         print('ID 찾기 실패')
@@ -519,11 +580,11 @@ def find_idDB(username, email, self):
 
 
 # -------------------------------find_pw DB 연동-------------------------------#
-def find_pwdDB(userId, email, self):
+def find_pwdDB(id, email, self):
     print('------find_pwdDB 연동 완료------')
 
     sql = "SELECT EXISTS(SELECT PWD FROM USER WHERE ID=%s AND EMAIL=%s)"
-    cursor.execute(sql, (userId, email))
+    cursor.execute(sql, (id, email))
     result = cursor.fetchone()
     row_count = result[0]
     # print(row_count)
@@ -531,7 +592,7 @@ def find_pwdDB(userId, email, self):
     if (row_count > 0):
         connect.commit()
         sql = "SELECT PWD FROM USER WHERE ID=%s AND EMAIL=%s"
-        cursor.execute(sql, (userId, email))
+        cursor.execute(sql, (id, email))
         connect.commit()
         pwd = cursor.fetchall()
         print("전처리 전: ", pwd)
@@ -575,6 +636,8 @@ def myDB(uid, username, rid, email, self):
         print('USER 정보 수정실패')
         self.request.send(b'f')
 
+#my = MyTcpHandler(socketserver.BaseRequestHandler) #https://wikidocs.net/1740
+my = MyTcpHandler('zjisuoo', '1234') #https://wikidocs.net/1740
 
 # 서버연동
 def runServer():
@@ -583,8 +646,13 @@ def runServer():
         # 1. 사용자가 화면 실행할때마다 MyTcpHandler함수에서 배열 update
         server = socketserver.TCPServer((HOST, PORT), MyTcpHandler)
         server.serve_forever()
+        process = multiprocessing.Process(target=my.handle())
+        process.start()
+        process2 = multiprocessing.Process(target=my.handle())
+        process2.start()
 
     except KeyboardInterrupt:
         print('서버를 종료합니다')
 
-runServer()
+if __name__=="__main__":
+    runServer()
