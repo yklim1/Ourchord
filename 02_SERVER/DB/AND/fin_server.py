@@ -20,7 +20,7 @@ PORT = 9300  # 9330
 suc = 's'
 fail = 'f'
 # /home/ec2-user/Ourchord/USER 에서 사용자 이름(id)만 구분하고 mid랑 pdf같이 저장하기
-SPDF_DIR = '/home/ec2-user/Ourchord/USER/'
+SPDF_DIR = ''
 
 connect = pymysql.connect(host="localhost",
                               port=3306,
