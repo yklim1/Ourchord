@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">OURCHORD</string>
+    <string name="title_activity_sub_main">sub_main</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 공지사항 타이틀 -->
+    <string name="important1_title">(중요) 음표 데이터 업데이트</string>
+    <string name="important2_title">(중요) 악보 업로드 최대 용량 확인</string>
+    <string name="notice1_title">(공지) OURCHORD 1.1 업데이트</string>
+    <string name="notice2_title">(공지) MIDI 파일 뷰어</string>
+    <string name="notice3_title">(공지) PDF 파일 뷰어</string>
+
+    <!-- 공지사항 내용 -->
+    <string name="important1_content">더 많은 음표를 인식할 수 있게 되었습니다! \n\n기존 OurChord는 음표 하나씩 인식 가능했지만, \n업그레이드 된 OurChord는 화음, 잇단 음표도 인식 가능합니다! \n\n더 많은 악보 코드 변환을 시작해보세요!</string>
+    <string name="important2_content">OurChord는 악보 업로드 최대 용량이 설정되어 있지 않습니다! \n\n회원님이 올리신 악보 파일은 바로 저희 \nOurChord 서버로 전송되기 때문입니다! \n회원님 핸드폰 용량이 가능한 선에서 최대로 악보 저장이 가능합니다!</string>
+    <string name="notice1_content">OURCHORD 업데이트 내용 \n\n 1) 음표 인식 속도 증가 \n 2) 파일 업로드 속도 증가 \n\n회원님의 요구사항에 맞춰 발빠른 앱 업데이트가 계속 됩니다!</string>
+    <string name="notice2_content">MIDI 파일은 앱 자체에서 확인 불가능합니다. \n\nMIDI 파일을 확인하시기 위해 \nMIDI 파일 뷰어 설치가 필요합니다. \n\n(ex. Garageband, NoteWorthy Player/Composer, \nPro Tool)</string>
+    <string name="notice3_content">PDF 파일은 앱 자체에서 확인 불가능합니다. \n\nPDF 파일을 업로드 하시기 위해 파일 권한 승인을 하셨다면, \n핸드폰 내 PDF 파일 뷰어 통해 확인 가능합니다. \n\n(ex. Adobe Acrobat DC, 알 PDF)</string>
+
+    <!-- FAQ 타이틀 -->
+    <string name="faq1_title">Q. 누가 개발했나요?</string>
+    <string name="faq2_title">Q. 악보 파일 업로드는 어떻게 하나요?</string>
+    <string name="faq3_title">Q. MIDI 파일이 뭔가요?</string>
+    <string name="faq4_title">Q. 코드 변환은 어떻게 하나요?</string>
+    <string name="faq5_title">Q. 코드 변환은 왜 필요한가요?</string>
+
+    <!-- FAQ 내용 -->
+    <string name="faq1_content">한국산업기술대학교 컴퓨터공학전공 3명의\n학생들이 2020년도 졸업작품으로 개발하였습니다 :)\n\n개인 깃허브 링크입니다.\n임영규 http://github.com/yklim1 \n김민지 http://github.com/flottante301 \n문지수 http://github.com/zjisuoo</string>
+    <string name="faq2_content">코드 변환을 위한 악보 파일을 업로드 하기 위해 \n파일 권한 승인이 필요합니다. \n\n업로드 해주신 악보 파일은 안전하게 보호되니 걱정마시고 \nPDF 파일을 업로드해주세요! \n\n파일 권한을 승인한 뒤 파일 업로드 버튼을 클릭하면 \n핸드폰으로 다운 받은 PDF 파일을 업로드 하실 수 있습니다!</string>
+    <string name="faq3_content">MIDI는 Musical Instrument Digital Interface의 약자입니다. \n\nMIDI 파일은 악기들이 서로 통신하여 \n여러 악기들을 제어할 수 있게 합니다. \nMIDI 파일을 통해 악보를 쉽게 수정할 수 있고, \nMIDI 플레이어로 음악을 들어보실 수 있습니다! \n\nMIDI 파일은 용량이 아주 작기 때문에 \n핸드폰 용량을 많이 차지 않으니 \n용량이 부족할까하는 걱정 안하셔 됩니다! </string>
+    <string name="faq4_content">음악은 코드(Chord)가 존재합니다! \nC, D, E, F, G, A, B 등 여러 코드가 있습니다! \n\nC 코드에서의 도와 D 코드의 레, E 코드의 미, F 코드의 파, \nG 코드의 솔, A 코드의 라, B 코드의 시와 같습니다. \n\n이 같은 규칙을 통해 코드 변환을 진행합니다!</string>
+    <string name="faq5_content">연주하기 쉽지 않은 코드, 음을 높이거나 낮추어 연주하기 \n쉬운 코드로 바꿀 수 있는 악보가 많습니다. \n코드 변환을 통해 더 쉽게 악기를 연주할 수 있습니다. \n\n또한 코드 변환을 통해 세션 연주 시 \n여러 악기들을 하나의 코드로 손쉽게 맞출 수 있습니다! \n\nOurChord를 통해 편리한 음악 생활을 시작해봅시다!</string>
+
+</resources>

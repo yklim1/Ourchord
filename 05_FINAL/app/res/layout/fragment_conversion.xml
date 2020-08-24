@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/gmarketmedium"
+        android:text="조변환 할 악보를 선택해주세요."/> -->
+
+    <Spinner
+        android:id="@+id/conviersion_sheet"
+        android:layout_margin="15dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:text="BASE"/>
+            <CheckBox
+                android:id="@+id/C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="C" />
+            <CheckBox
+                android:id="@+id/Cup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="C#" />
+            <CheckBox
+                android:id="@+id/D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="D" />
+            <CheckBox
+                android:id="@+id/Dup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="D#" />
+            <CheckBox
+                android:id="@+id/E"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="E" />
+            <CheckBox
+                android:id="@+id/F"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="F" />
+            <CheckBox
+                android:id="@+id/Fup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="F#" />
+            <CheckBox
+                android:id="@+id/G"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="G" />
+            <CheckBox
+                android:id="@+id/Gup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="G#" />
+            <CheckBox
+                android:id="@+id/A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="A" />
+            <CheckBox
+                android:id="@+id/Aup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="A#" />
+            <CheckBox
+                android:id="@+id/B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="B" />
+            <CheckBox
+                android:id="@+id/Bup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#949596"
+                android:text="B#" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="300px"
+            android:layout_height="100px"
+            android:src="@drawable/arrow"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:text="CHANGE"/>
+                <CheckBox
+                    android:id="@+id/cC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:checked="true"
+                    android:text="C" />
+                <CheckBox
+                    android:id="@+id/cCup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="C#" />
+                <CheckBox
+                    android:id="@+id/cD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="D" />
+                <CheckBox
+                    android:id="@+id/cDup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="D#" />
+                <CheckBox
+                    android:id="@+id/cE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="E" />
+                <CheckBox
+                    android:id="@+id/cF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="F" />
+                <CheckBox
+                    android:id="@+id/cFup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="F#" />
+                <CheckBox
+                    android:id="@+id/cG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="G" />
+                <CheckBox
+                    android:id="@+id/cGup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="G#" />
+                <CheckBox
+                    android:id="@+id/cA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="A" />
+                <CheckBox
+                    android:id="@+id/cAup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="A#" />
+                <CheckBox
+                    android:id="@+id/cB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="B" />
+                <CheckBox
+                    android:id="@+id/cBup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gmarketmedium"
+                    android:textColor="#949596"
+                    android:text="B#" />
+            </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/chord_conversion_btn"
+        android:layout_gravity="center"
+        android:layout_width="700px"
+        android:layout_height="100px"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/gmarketmedium"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_btn"
+        android:text="CHORD CONVERSION" />
+
+</LinearLayout>

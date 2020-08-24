@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="LOGIN"
+            android:fontFamily="@font/gmarketbold"
+            android:textSize="30dp"/>
+        <EditText
+            android:id="@+id/id_input"
+            android:layout_width="800px"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarketmedium"
+            android:hint="ID를 입력해주세요."
+            android:inputType="text" />
+        <EditText
+            android:id="@+id/pwd_input"
+            android:layout_width="800px"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarketmedium"
+            android:hint="비밀번를 입력해주세요."
+            android:inputType="textPassword"/>
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="700px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/blue_btn"
+            android:text="LOGIN"
+            android:fontFamily="@font/gmarketmedium"
+            android:textColor="#ffffff" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/go_join_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00ffffff"
+                android:text="회원가입"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#494847" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="/"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/go_find_id_btn"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:background="#00ffffff"
+                android:text="ID"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#494847" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"/>
+            <Button
+                android:id="@+id/go_find_pw_btn"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:background="#00ffffff"
+                android:text="PW 찾기"
+                android:fontFamily="@font/gmarketmedium"
+                android:textColor="#494847" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
